@@ -1,5 +1,5 @@
 CREATE TABLE `patients` (
-  `﻿patient_id` int NOT NULL,
+  `index` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
   `MRN` varchar(50) DEFAULT NULL,
   `DOB` varchar(50) DEFAULT NULL,
@@ -10,7 +10,6 @@ CREATE TABLE `patients` (
   `race` varchar(50) DEFAULT NULL,
   `performance_status` varchar(50) DEFAULT NULL,
   `treatment_site` varchar(50) DEFAULT NULL,
-  `stage` varchar(50) DEFAULT NULL,
   `T` varchar(50) DEFAULT NULL,
   `N` varchar(50) DEFAULT NULL,
   `M` varchar(50) DEFAULT NULL,
@@ -18,25 +17,23 @@ CREATE TABLE `patients` (
   `primary_site` varchar(50) DEFAULT NULL,
   `metastasis` varchar(50) DEFAULT NULL,
   `nodes_num` varchar(50) DEFAULT NULL,
+  `staging_system` varchar(50) DEFAULT NULL,
   `histology` varchar(50) DEFAULT NULL,
-  `staging` varchar(50) DEFAULT NULL,
-  `lab` varchar(50) DEFAULT NULL,
+  `margin` varchar(50) DEFAULT NULL,
   `PSA` varchar(50) DEFAULT NULL,
   `gleason` varchar(50) DEFAULT NULL,
+  `recurrence` varchar(50) DEFAULT NULL,
   `volume_size` varchar(50) DEFAULT NULL,
   `dimension_size` varchar(50) DEFAULT NULL,
   `location` varchar(50) DEFAULT NULL,
-  `recurrence` varchar(50) DEFAULT NULL,
   `clinical_risk` varchar(50) DEFAULT NULL,
   `treatment_intent` varchar(50) DEFAULT NULL,
   `retreat` varchar(50) DEFAULT NULL,
   `prior_RT` varchar(50) DEFAULT NULL,
   `surgery` varchar(50) DEFAULT NULL,
-  `other_therapies` varchar(50) DEFAULT NULL,
   `chemtherapy` varchar(50) DEFAULT NULL,
   `hormone` varchar(50) DEFAULT NULL,
   `immunotherapy` varchar(50) DEFAULT NULL,
-  `ADT` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`﻿patient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-SELECT * FROM capstone.patients;
+  `ADT` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`index`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
