@@ -1,9 +1,5 @@
 CREATE TABLE `patients` (
-<<<<<<< HEAD:database/create_patient.sql
   `index` int(11) NOT NULL AUTO_INCREMENT,
-=======
-  `index` int NOT NULL AUTO_INCREMENT,
->>>>>>> 65965f030f321e2bbe97a2bbfaee777e84d060a1:database/create_patient.sql
   `name` varchar(50) DEFAULT NULL,
   `MRN` varchar(50) DEFAULT NULL,
   `DOB` varchar(50) DEFAULT NULL,
@@ -40,9 +36,4 @@ CREATE TABLE `patients` (
   `immunotherapy` varchar(50) DEFAULT NULL,
   `ADT` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`index`)
-<<<<<<< HEAD:database/create_patient.sql
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
-SELECT * FROM capstone.patients;
-=======
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
->>>>>>> 65965f030f321e2bbe97a2bbfaee777e84d060a1:database/create_patient.sql
