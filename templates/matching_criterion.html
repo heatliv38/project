@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description_" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Matching Criteria</title>
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.md-45rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <!-- <link href="form-validation.css" rel="stylesheet"> -->
+  </head>
+  <body class="bg-light">
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/patient_input">Add Patient</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/protocol_input">Add Protocol</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/matching_criterion">Match</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/patient_data">View All Patients</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/protocol_data">View All Protocols</a>
+            </li>
+    
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h3>Matching Criteria</h3>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h5 class="mb-3">Patient Index</h5>
+        <form action="/matching_criterion" method="POST">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="index" placeholder="">
+            </div>
+          </div>
+          <hr class="my-4">
+          <h5 class="mb-3">Fields & Weights</h5>
+          <div class="row gy-3">
+            <span class="help-block">
+              <small>Enter to change the matching weights (0 means not used for matching).</small>
+            </span>
+            <div class="col-md-4">
+              <label for="treatsite" class="form-label">Treatment Site</label>
+              <input type="text" class="form-control" name="treatment_site" value="10">
+            </div>
+            <div class="col-md-4">
+              <label for="T" class="form-label">Staging T</label>
+              <input type="text" class="form-control" name="T" value="10">
+            </div>
+            <div class="col-md-4">
+              <label for="N" class="form-label">Staging N</label>
+              <input type="text" class="form-control" name="N" value="10">
+            </div>
+            <div class="col-md-4">
+              <label for="M" class="form-label">Staging M</label>
+              <input type="text" class="form-control" name="M" value="10">
+            </div>
+            <div class="col-md-4">
+              <label for="risk_group" class="form-label">Indication/Risk Group NCCN</label>
+              <input type="text" class="form-control" name="risk_group" value="10">
+            </div>
+
+            <div class="col-md-4">
+              <label for="primary_site" class="form-label">Primary Site</label>
+              <input type="text" class="form-control" name="primary_site" value="10">
+            </div>
+
+            <div class="col-md-4">
+              <label for="metastasis" class="form-label">Metastasis</label>
+              <input type="text" class="form-control" name="metastasis" value="0">
+            </div>
+
+            <div class="col-md-4">
+              <label for="node_num" class="form-label">No. of Nodes</label>
+              <input type="text" class="form-control" name="node_num" value="10">
+            </div>
+
+            <div class="col-md-4">
+              <label for="histology" class="form-label">Histology/Pathology</label>
+              <input type="text" class="form-control" name="histology" value="10">
+            </div>
+
+            <div class="col-md-4">
+              <label for="margin" class="form-label">Margin</label>
+              <input type="text" class="form-control" name="margin" value="10">
+            </div>
+            <div class="col-md-4">
+              <label for="PSA" class="form-label">PSA</label>
+              <input type="text" class="form-control" name="PSA" value="10">
+            </div>
+            <div class="col-md-4">
+              <label for="gleason" class="form-label">Gleason Score</label>
+              <input type="text" class="form-control" name="gleason" value="10">
+            </div>
+            <div class="col-md-4">
+              <label for="recurrence" class="form-label">Recurrence</label>
+              <input type="text" class="form-control" name="recurrence" value="10">
+            </div>
+       
+            <div class="col-md-4">
+              <label for="performance_status" class="form-label">Performance Status (WHO)</label>
+              <input type="text" class="form-control" name="performance_status" value="6">
+            </div>
+
+            <div class="col-md-4">
+              <label for="age" class="form-label">Age Range</label>
+              <input type="text" class="form-control" name="age" value="3">
+            </div>
+
+            <div class="col-md-3">
+              <label for="treatment_intent" class="form-label">Treatment Intent</label>
+              <input type="text" class="form-control" name="treatment_intent" value="10">
+            </div>
+
+            <div class="col-md-3">
+              <label for="retreat" class="form-label">Retreat</label>
+              <input type="text" class="form-control" name="retreat" value="10">
+            </div>
+
+            <div class="col-md-3">
+              <label for="prior_RT" class="form-label">Prior RT</label>
+              <input type="text" class="form-control" name="prior_RT" value="10">
+            </div>
+
+            <div class="col-md-3">
+              <label for="surgery" class="form-label">Surgery</label>
+              <input type="text" class="form-control" name="surgery" value="10">
+            </div>
+            <div class="col-12">
+              <label for="chemtherapy" class="form-label">Other Therapies (Any of Chemtherapy, Hormone, Immunotherapy, or Surgery)</label>
+              <input type="text" class="form-control" name="other_therapies" value="10">
+            </div>
+            <div class="col-12">
+             <br/>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+             <button class="btn btn-dark" type="submit" value="add">Match</button>
+            </div>
+            <div class="col-12">
+              <br/>
+            </div>
+          
+
+        </form>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>    
+   </body>
+</html>

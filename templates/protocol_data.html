@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="{{ url_for('static', filename='jquery-simple-tree-table.js') }}"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='table.css') }}" rel="stylesheet">
+  <title>Protocols Data</title>
+
+</head>
+<body>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="True" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/patient_input">Add Patient</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/protocol_input">Add Protocol</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/matching_criterion">Match</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/patient_data">View All Patients</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/protocol_data">View All Protocols</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br/>
+  <br/>
+  <br/>
+  <button class="first-button" type="button" id="expander">Expand All</button>
+  <button class="second-button" type="button" id="collapser">Collapse All</button>
+  <div class="tablebody" >
+    <table class="mytable" id="basic">
+      <tr data-node-id="Index">
+        <th class="myth" class="myth">Index</th>
+        {% for d in data %}
+          <td>{{ d['index'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="study">
+        <th class="myth">Study/Protocol</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="name" data-node-pid="study">
+        <th class="myth">Study Name</th>
+        {% for d in data %}
+          <td>{{ d['name'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="descrp" data-node-pid="study">
+        <th class="myth">Study Short Description</th>
+        {% for d in data %}
+          <td>{{ d['description'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="source" data-node-pid="study">
+        <th class="myth">Study source/institution(s)</th>
+        {% for d in data %}
+          <td>{{ d['source'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="pmid" data-node-pid="study">
+        <th class="myth">Publication unique ID (PMID)</th>
+        {% for d in data %}
+          <td>{{ d['PMID'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="date" data-node-pid="study">
+        <th class="myth">Publish Date</th>
+        {% for d in data %}
+          <td>{{ d['date'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="size" data-node-pid="study">
+        <th class="myth">Study Size</th>
+        {% for d in data %}
+          <td>{{ d['study_size'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="stype" data-node-pid="study">
+        <th class="myth">Study Type</th>
+        {% for d in data %}
+          <td>{{ d['study_type'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="atype" data-node-pid="study">
+        <th class="myth">Analysis Type</th>
+        {% for d in data %}
+          <td>{{ d['analysis_type'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="country" data-node-pid="study">
+        <th class="myth">Country of Study</th>
+        {% for d in data %}
+          <td>{{ d['country'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="doi" data-node-pid="study">
+        <th class="myth">Full Study PDF (DOI number)</th>
+        {% for d in data %}
+          <td>{{ d['DOI'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="disease">
+        <th class="myth">Disease</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="tsite" data-node-pid="disease">
+        <th class="myth">Treatment Site</th>
+        {% for d in data %}
+          <td>{{ d['treatment_site'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="T" data-node-pid="disease">
+        <th class="myth">Staging T</th>
+        {% for d in data %}
+          <td>{{ d['T'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="N" data-node-pid="disease">
+        <th class="myth">Staging N</th>
+        {% for d in data %}
+          <td>{{ d['N'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="M" data-node-pid="disease">
+        <th class="myth">Staging M</th>
+        {% for d in data %}
+          <td>{{ d['M'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="risk" data-node-pid="disease">
+        <th class="myth">Indications/Risk Group NCCN</th>
+        {% for d in data %}
+          <td>{{ d['risk_group'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="psite" data-node-pid="disease">
+        <th class="myth">Primary Site</th>
+        {% for d in data %}
+          <td>{{ d['primary_site'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="metastasis" data-node-pid="disease">
+        <th class="myth">Metastasis</th>
+        {% for d in data %}
+          <td>{{ d['metastasis'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="nodes_num" data-node-pid="disease">
+        <th class="myth">No. of Nodes</th>
+        {% for d in data %}
+          <td>{{ d['nodes_num'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="stagesys" data-node-pid="disease">
+        <th class="myth">Staging System</th>
+        {% for d in data %}
+          <td>{{ d['staging_system'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="diagnosis">
+        <th class="myth">Diagnosis</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="histology" data-node-pid="diagnosis">
+        <th class="myth">Histology/Pathology</th>
+        {% for d in data %}
+          <td>{{ d['histology'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="margin" data-node-pid="diagnosis">
+        <th class="myth">Margin</th>
+        {% for d in data %}
+          <td>{{ d['margin'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="psa" data-node-pid="diagnosis">
+        <th class="myth">PSA</th>
+        {% for d in data %}
+          <td>{{ d['PSA'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="gleason" data-node-pid="diagnosis">
+        <th class="myth">Gleason</th>
+        {% for d in data %}
+          <td>{{ d['gleason'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="tumor">
+        <th class="myth">Tumor Specifics</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="recurrence" data-node-pid="tumor">
+        <th class="myth">Recurrence</th>
+        {% for d in data %}
+          <td>{{ d['recurrence'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="volume_size" data-node-pid="tumor">
+        <th class="myth">Size in Volume</th>
+        {% for d in data %}
+          <td>{{ d['volume_size'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="dimension_size" data-node-pid="tumor">
+        <th class="myth">Size in Dimension</th>
+        {% for d in data %}
+          <td>{{ d['dimension_size'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="location" data-node-pid="tumor">
+        <th class="myth">Location</th>
+        {% for d in data %}
+          <td>{{ d['location'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="clinical_risk" data-node-pid="tumor">
+        <th class="myth">Clinical Risk Factors</th>
+        {% for d in data %}
+          <td>{{ d['clinical_risk'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="patient">
+        <th class="myth">Patient Characteristics</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="performance_status" data-node-pid="patient">
+        <th class="myth">Performance Status</th>
+        {% for d in data %}
+          <td>{{ d['performance_status'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="age" data-node-pid="patient">
+        <th class="myth">Age Range</th>
+        {% for d in data %}
+          <td>{{ d['age'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="weight" data-node-pid="patient">
+        <th class="myth">Weight Range</th>
+        {% for d in data %}
+          <td>{{ d['weight'] }}</td>
+        {% endfor %}
+      </tr> <tr data-node-id="height" data-node-pid="patient">
+        <th class="myth">Height Range</th>
+        {% for d in data %}
+          <td>{{ d['height'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="gender" data-node-pid="patient">
+        <th class="myth">Gender</th>
+        {% for d in data %}
+          <td>{{ d['gender_ratio'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="race" data-node-pid="patient">
+        <th class="myth">Race</th>
+        {% for d in data %}
+          <td>{{ d['race'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="intent">
+        <th class="myth">History/Intent</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="tintent" data-node-pid="intent">
+        <th class="myth">Treatment Intent</th>
+        {% for d in data %}
+          <td>{{ d['treatment_Intent'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="retreat" data-node-pid="intent">
+        <th class="myth">Retreat</th>
+        {% for d in data %}
+          <td>{{ d['retreat'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="prior_RT" data-node-pid="intent">
+        <th class="myth">Prior RT</th>
+        {% for d in data %}
+          <td>{{ d['prior_RT'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="surgery" data-node-pid="intent">
+        <th class="myth">Surgery</th>
+        {% for d in data %}
+          <td>{{ d['surgery'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="chemtherapy" data-node-pid="intent">
+        <th class="myth">Chemtherapy</th>
+        {% for d in data %}
+          <td>{{ d['chemtherapy'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="hormone" data-node-pid="intent">
+        <th class="myth">Hormone</th>
+        {% for d in data %}
+          <td>{{ d['hormone'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="immunotherapy" data-node-pid="intent">
+        <th class="myth">Immunotherapy</th>
+        {% for d in data %}
+          <td>{{ d['immunotherapy'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="ADT" data-node-pid="intent">
+        <th class="myth">Androgen Deprivation (ADT)</th>
+        {% for d in data %}
+          <td>{{ d['ADT'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="regimen_I">
+        <th class="myth">Regimen I+</th>
+        {% for d in data %}
+          <td>{{ d['Regimen_I'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="basefrac" data-node-pid="regimen_I">
+        <th class="myth">Base Dose (Gy) / Fractions</th>
+        {% for d in data %}
+          <td>{{ d['RI_base_dose_fractions'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="boostmod" data-node-pid="regimen_I">
+        <th class="myth">Boost Dose (Gy) / Modality</th>
+        {% for d in data %}
+          <td>{{ d['RI_boost_dose_modality'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="therapies" data-node-pid="regimen_I">
+        <th class="myth">Other Therapies</th>
+        {% for d in data %}
+          <td>{{ d['RI_other_therapies'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP" data-node-pid="regimen_I">
+        <th class="myth">TCP Outcomes</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_median_follow_up" data-node-pid="RI_TCP">
+        <th class="myth">Median Follow-up (months)</th>
+        {% for d in data %}
+          <td>{{ d['RI_TCP_median_follow_up'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_LC" data-node-pid="RI_TCP">
+        <th class="myth">Local Control (LC)</th>
+        {% for d in data %}
+          <td>{{ d['RI_local_control'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_OS" data-node-pid="RI_TCP">
+        <th class="myth">Overall Survival (OS)</th>
+        {% for d in data %}
+          <td>{{ d['RI_overall_survival'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_PFS" data-node-pid="RI_TCP">
+        <th class="myth">PFS</th>
+        {% for d in data %}
+          <td>{{ d['RI_PFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_bPFS" data-node-pid="RI_TCP">
+        <th class="myth">bPFS</th>
+        {% for d in data %}
+          <td>{{ d['RI_bPFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_DFS" data-node-pid="RI_TCP">
+        <th class="myth">DFS</th>
+        {% for d in data %}
+          <td>{{ d['RI_DFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_FFS" data-node-pid="RI_TCP">
+        <th class="myth">FFS</th>
+        {% for d in data %}
+          <td>{{ d['RI_FFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_MFS" data-node-pid="RI_TCP">
+        <th class="myth">MFS</th>
+        {% for d in data %}
+          <td>{{ d['RI_MFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_CSS" data-node-pid="RI_TCP">
+        <th class="myth">CSS</th>
+        {% for d in data %}
+          <td>{{ d['RI_CSS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_DMFS" data-node-pid="RI_TCP">
+        <th class="myth">DMFS</th>
+        {% for d in data %}
+          <td>{{ d['RI_DMFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_TCP_BCR" data-node-pid="RI_TCP">
+        <th class="myth">(Biochemical Recurrence) BCR</th>
+        {% for d in data %}
+          <td>{{ d['RI_BCR'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP" data-node-pid="regimen_I">
+        <th class="myth">NTCP Outcomes</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP_median_follow_up" data-node-pid="RI_NTCP">
+        <th class="myth">Median Follow-up (months)</th>
+        {% for d in data %}
+          <td>{{ d['RI_NTCP_median_follow_up'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP_tox" data-node-pid="RI_NTCP">
+        <th class="myth">Toxicity System</th>
+        {% for d in data %}
+          <td>{{ d['RI_toxicity_system'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP_acute" data-node-pid="RI_NTCP">
+        <th class="myth">Acute</th>
+        {% for d in data %}
+          <td>{{ d['RI_Acute'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP_G1" data-node-pid="RI_NTCP">
+        <th class="myth">G1+</th>
+        {% for d in data %}
+          <td>{{ d['RI_G1'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP_G2" data-node-pid="RI_NTCP">
+        <th class="myth">G2+</th>
+        {% for d in data %}
+          <td>{{ d['RI_G2'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP_G3" data-node-pid="RI_NTCP">
+        <th class="myth">G3+</th>
+        {% for d in data %}
+          <td>{{ d['RI_G3'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP_G4" data-node-pid="RI_NTCP">
+        <th class="myth">G4+</th>
+        {% for d in data %}
+          <td>{{ d['RI_G4'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RI_NTCP_G5" data-node-pid="RI_NTCP">
+        <th class="myth">G5</th>
+        {% for d in data %}
+          <td>{{ d['RI_G5'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="regimen_II">
+        <th class="myth">Regimen II+</th>
+        {% for d in data %}
+          <td>{{ d['Regimen_II'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="RII_basefrac" data-node-pid="regimen_II">
+        <th class="myth">Base Dose (Gy) / Fractions</th>
+        {% for d in data %}
+          <td>{{ d['RII_base_dose_fractions'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_boostmod" data-node-pid="regimen_II">
+        <th class="myth">Boost Dose (Gy) / Modality</th>
+        {% for d in data %}
+          <td>{{ d['RII_boost_dose_modality'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_therapies" data-node-pid="regimen_II">
+        <th class="myth">Other Therapies</th>
+        {% for d in data %}
+          <td>{{ d['RII_other_therapies'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP" data-node-pid="regimen_II">
+        <th class="myth">TCP Outcomes</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_median_follow_up" data-node-pid="RII_TCP">
+        <th class="myth">Median Follow-up (months)</th>
+        {% for d in data %}
+          <td>{{ d['RII_TCP_median_follow_up'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_LC" data-node-pid="RII_TCP">
+        <th class="myth">Local Control (LC)</th>
+        {% for d in data %}
+          <td>{{ d['RII_local_control'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_OS" data-node-pid="RII_TCP">
+        <th class="myth">Overall Survival (OS)</th>
+        {% for d in data %}
+          <td>{{ d['RII_overall_survival'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_PFS" data-node-pid="RII_TCP">
+        <th class="myth">PFS</th>
+        {% for d in data %}
+          <td>{{ d['RII_PFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_bPFS" data-node-pid="RII_TCP">
+        <th class="myth">bPFS</th>
+        {% for d in data %}
+          <td>{{ d['RII_bPFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_DFS" data-node-pid="RII_TCP">
+        <th class="myth">DFS</th>
+        {% for d in data %}
+          <td>{{ d['RII_DFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_FFS" data-node-pid="RII_TCP">
+        <th class="myth">FFS</th>
+        {% for d in data %}
+          <td>{{ d['RII_FFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_MFS" data-node-pid="RII_TCP">
+        <th class="myth">MFS</th>
+        {% for d in data %}
+          <td>{{ d['RII_MFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_CSS" data-node-pid="RII_TCP">
+        <th class="myth">CSS</th>
+        {% for d in data %}
+          <td>{{ d['RII_CSS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_TCP_DMFS" data-node-pid="RII_TCP">
+        <th class="myth">DMFS</th>
+        {% for d in data %}
+          <td>{{ d['RII_DMFS'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP" data-node-pid="regimen_II">
+        <th class="myth">NTCP Outcomes</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP_median_follow_up" data-node-pid="RII_NTCP">
+        <th class="myth">Median Follow-up (months)</th>
+        {% for d in data %}
+          <td>{{ d['RII_NTCP_median_follow_up'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP_tox" data-node-pid="RII_NTCP">
+        <th class="myth">Toxicity System</th>
+        {% for d in data %}
+          <td>{{ d['RII_toxicity_system'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP_acute" data-node-pid="RII_NTCP">
+        <th class="myth">Acute</th>
+        {% for d in data %}
+          <td>{{ d['RII_Acute'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP_G1" data-node-pid="RII_NTCP">
+        <th class="myth">G1+</th>
+        {% for d in data %}
+          <td>{{ d['RII_G1'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP_G2" data-node-pid="RII_NTCP">
+        <th class="myth">G2+</th>
+        {% for d in data %}
+          <td>{{ d['RII_G2'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP_G3" data-node-pid="RII_NTCP">
+        <th class="myth">G3+</th>
+        {% for d in data %}
+          <td>{{ d['RII_G3'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP_G4" data-node-pid="RII_NTCP">
+        <th class="myth">G4+</th>
+        {% for d in data %}
+          <td>{{ d['RII_G4'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="RII_NTCP_G5" data-node-pid="RII_NTCP">
+        <th class="myth">G5</th>
+        {% for d in data %}
+          <td>{{ d['RII_G5'] }}</td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="treatment">
+        <th class="myth">Treatment Techniques</th>
+        {% for d in data %}
+          <td></td>
+        {% endfor %}
+      </tr> 
+      <tr data-node-id="modality" data-node-pid="treatment">
+        <th class="myth">Modality</th>
+        {% for d in data %}
+          <td>{{ d['modality'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="planning" data-node-pid="treatment">
+        <th class="myth">Planning</th>
+        {% for d in data %}
+          <td>{{ d['planning'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="delivery" data-node-pid="treatment">
+        <th class="myth">Delivery</th>
+        {% for d in data %}
+          <td>{{ d['delivery'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="imaging" data-node-pid="treatment">
+        <th class="myth">Imaging</th>
+        {% for d in data %}
+          <td>{{ d['imaging'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="setup" data-node-pid="treatment">
+        <th class="myth">Setup</th>
+        {% for d in data %}
+          <td>{{ d['setup'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="conclusion">
+        <th class="myth">Key Conclusion</th>
+        {% for d in data %}
+          <td>{{ d['key_conclusion'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="target_dose_constraints">
+        <th class="myth">Target Dose Constraints</th>
+        {% for d in data %}
+          <td>{{ d['target_dose_constraints'] }}</td>
+        {% endfor %}
+      </tr>
+      <tr data-node-id="OAR_constraints">
+        <th class="myth">OAR Constraints</th>
+        {% for d in data %}
+          <td>{{ d['OAR_constraints'] }}</td>
+        {% endfor %}
+      </tr>   
+    </table>
+  </div>
+  
+  <script>
+  $('#basic').simpleTreeTable({
+    expander: $('#expander'),
+    collapser: $('#collapser'),
+    store: 'session',
+    storeKey: 'simple-tree-table-basic'
+  });
+  $('#open1').on('click', function() {
+    $('#basic').data('simple-tree-table').openByID("1");
+  });
+  $('#close1').on('click', function() {
+    $('#basic').data('simple-tree-table').closeByID("1");
+  });
+  </script>
+</body>
+</html>

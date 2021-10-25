@@ -1,0 +1,27 @@
+
+table {
+    column-rule-style: solid;
+    column-rule-width: thin;
+    }
+th {  
+    background-color: darkgray;
+    position: -webkit-sticky;
+    position: sticky;
+    left: 1px;
+    font-weight: bold;
+    max-width: 220px;
+    min-width: 220px;
+    }
+td {
+    background-color: lightgrey;
+    max-width: 220px;
+    min-width: 220px;
+}
+td, th { 
+    padding-left: 5px; 
+    padding-top: 1px; 
+    text-align: left; 
+    font-size: 10px;
+    max-width: 220px;
+    min-width: 220px;
+    }

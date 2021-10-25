@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description_" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Protocol Input</title>
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <!-- <link href="form-validation.css" rel="stylesheet"> -->
+  </head>
+  <body class="bg-light">
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            <li class="nav-item">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/patient_input">Add Patient</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/protocol_input">Add Protocol</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/matching_criterion">Match</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/patient_data">View All Patients</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/protocol_data">View All Protocols</a>
+            </li>
+    
+          </ul>
+        </div>
+      </div>
+    </nav>
+    
+<div class="container">
+  <main>
+    <div class="py-5 text-center">
+      <h2>Protocol Information</h2>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">Study/Protocol</h4>
+        <form action="/protocol_input" method="POST">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="study_name" class="form-label">Study Name</label>
+              <input type="text" class="form-control" name="study_name" placeholder="">
+            </div>
+
+            <div class="col-sm-6">
+              <label for="description" class="form-label">Study Short Description</label>
+              <input type="text" class="form-control" name="description" placeholder="">
+            </div>
+
+            <div class="col-sm-6">
+              <label for="source" class="form-label">Study Source/Institution(s)</label>
+              <input type="text" class="form-control" name="source" placeholder="">
+            </div>
+
+            <div class="col-sm-6">
+              <label for="PMID" class="form-label">Publication Unique ID (PMID)</label>
+              <input type="text" class="form-control" name="PMID" placeholder="">
+            </div>
+
+            <div class="col-md-3">
+              <label for="publish_date" class="form-label">Publish Date</label>
+              <input type="text" class="form-control" name="publish_date" placeholder="MM/DD/YYYY">
+            </div>
+
+            <div class="col-md-3">
+              <label for="size" class="form-label">Study Size</label>
+              <input type="text" class="form-control" name="size" placeholder="">
+            </div>
+
+            <div class="col-md-6">
+              <label for="study_type" class="form-label">Study Type</label>
+              <select class="form-select" name="study_type" placeholder="">
+                <option value=""></option>
+                <option>Retrospective</option>
+                <option>Prospective</option>
+                <option>Single Institution</option>
+                <option>Multi-center</option>
+                <option>Meta-analysis</option>
+                <option>Trials: phase I</option>
+                <option>Trials: phase II</option>
+                <option>Trials: phase III</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="analysis_type" class="form-label">Analysis Type</label>
+              <select multiple class="form-select" name="analysis_type" placeholder="">
+                <!-- 对于 windows：按住 Ctrl 按钮来选择多个选项
+                对于 Mac：按住 command 按钮来选择多个选项 -->
+                <option value="" selected></option>
+                <option>Actuarial</option>
+                <option>Crude</option>
+                <option>Estimated</option>
+                <option>Kaplan Meier</option>
+                <option>Modeling</option>
+                <option>Controlled</option>
+                <option>Randomized</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="country" class="form-label">Country of Study</label>
+              <select multiple class="form-select" name="country" placeholder="">
+                <!-- 对于 windows：按住 Ctrl 按钮来选择多个选项
+                对于 Mac：按住 command 按钮来选择多个选项 -->
+                <option value="" selected></option>
+                <option>USA</option>
+                <option>Canada</option>
+                <option>England</option>
+                <option>Australia</option>
+                <option>China</option>
+                <option>India</option>
+                <option>Sweden</option>
+                <option>Norway</option>
+                <option>Denmarks</option>
+                <option>Nethelands</option>
+                <option>Italy</option>
+                <option>Brazil</option>
+                <option>Multi-nation</option>
+              </select>
+            </div>
+            <span class="help-block">
+              <small>To select multiple options, Windows users press Ctrl, Mac users press command</small>
+            </span>
+
+            <div class="col-12">
+              <label for="DOI" class="form-label">Full Study PDF (DOI number)</label>
+              <input type="text" class="form-control" name="DOI" placeholder="">
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Disease</h4>
+          <div class="row gy-3">
+
+            <div class="col-12">
+              <label for="treatsite" class="form-label">Treatment Site</label>
+              <select multiple class="form-select" name="treatment_site" placeholder="Choose...">
+                  <option value="" selected></option>
+                  <option>Prostate</option>
+                  <option>Prostate Bed</option>
+                  <option>Pelvis</option>
+              </select>
+              <span class="help-block">
+                <small>To select multiple options, Windows users press Ctrl, Mac users press command</small>
+              </span>
+            </div>
+
+            <div class="col-12">
+              <label for="stage" class="form-label">Stage</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text">T</span>
+                <select multiple class="form-select" name="T">
+                  <option value="" selected></option>
+                  <option>x</option>
+                  <option>0</option>
+                  <option>1a</option>
+                  <option>1b</option>
+                  <option>1c</option>
+                  <option>1d</option>
+                  <option>2a</option>
+                  <option>2b</option>
+                  <option>2c</option>
+                  <option>2d</option>
+                  <option>3a</option>
+                  <option>3b</option>
+                  <option>3c</option>
+                  <option>3d</option>
+                  <option>4a</option>
+                  <option>4b</option>
+                  <option>4c</option>
+                  <option>4d</option>
+                </select>
+                <span class="input-group-text">N</span>
+                <select multiple class="form-select" name="N">
+                  <option value="" selected></option>
+                  <option>x</option>
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                </select>
+                <span class="input-group-text">M</span>
+                <select multiple class="form-select" name="M">
+                  <option value="" selected></option>
+                  <option>x</option>
+                  <option>0</option>
+                  <option>1</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <label for="risk_group" class="form-label">Indication/Risk Group NCCN</label>
+              <select multiple class="form-select" name="risk_group" >
+                <option value="" selected></option>
+                <option>Very Low</option>
+                <option>Low</option>
+                <option>Intermediate (favorable)</option>
+                <option>Intermediate (unfavorable)</option>
+                <option>High</option>
+                <option>Very High</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label for="primary_site" class="form-label">Primary Site</label>
+              <select class="form-select" name="primary_site" >
+                <option value=""></option>
+                <option>Prostate</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label for="metastasis" class="form-label">Metastasis</label>
+              <select class="form-select" name="metastasis" >
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label for="node_num" class="form-label">No. of Nodes</label>
+              <input type="text" class="form-control" name="node_num" placeholder="">
+            </div>
+
+            <div class="col-md-4">
+              <label for="staging_system" class="form-label">Staging System</label>
+              <select multiple class="form-select" name="staging_system" >
+                <option value="" selected></option>
+                <option>Clinical</option>
+                <option>Pathological</option>
+                <option>Post-therapy</option>
+              </select>
+            </div>
+          </div>
+          <hr class="my-4">
+
+          <h4 class="mb-3">Diagnosis</h4>
+          <div class="row gy-3">
+
+            <div class="col-sm-6">
+              <label for="histology" class="form-label">Histology/Pathology</label>
+              <select class="form-select" name="histology" >
+                <option value=""></option>
+                <option>Carcinoma</option>
+                <option>Sarcoma</option>
+                <option>Myeloma</option>
+                <option>Leukemia</option>
+                <option>Lymphoma</option>
+                <option>Mixed Types</option>
+              </select>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="margin" class="form-label">Margin</label>
+              <select class="form-select" name="margin" >
+                <option value=""></option>
+                <option>Positive</option>
+                <option>Negative</option>
+                <option>Positive/Negative</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label for="lab" class="form-label">Lab</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text">PSA</span>
+                <input type="text" class="form-control" placeholder="" name="PSA">
+                <span class="input-group-text">Gleason</span>
+                <input type="text" class="form-control" placeholder="" name="gleason">
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Tumor Specifics</h4>
+          <div class="row gy-3">
+
+            <div class="col-md-2">
+              <label for="recurrence" class="form-label">Recurrence</label>
+              <select class="form-select" name="recurrence" >
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="volume_size" class="form-label">Size in Volume (cc)</label>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="" name="volume_size">
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="dimension_size" class="form-label">Size in Dimension (cm)</label>
+              <input type="text" class="form-control" placeholder="" name="dimension_size">
+            </div>
+
+            <div class="col-sm-6">
+              <label for="location" class="form-label">Location</label>
+              <input type="text" class="form-control" placeholder="" name="location">
+            </div>
+
+            <div class="col-sm-6">
+              <label for="clinical_risk_factors" class="form-label">Clinical Risk Factors</label>
+              <input type="text" class="form-control" placeholder="" name="clinical_risk_factors">
+            </div>
+
+          </div>
+          <hr class="my-4">
+
+          <h4 class="mb-3">Patient Characteristics</h4>
+          <div class="row gy-3">
+            <div class="col-12">
+              <label for="performance_status" class="form-label">Performance Status (WHO)</label>
+              <select multiple class="form-select" name="performance_status" placeholder="Choose...">
+                <option value="" selected></option>
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+              </select>
+            </div>
+
+            <div class="col-md-4">
+              <label for="age" class="form-label">Age Range</label>
+              <input type="text" class="form-control" name="age" placeholder="">
+            </div>
+
+            <div class="col-md-4">
+              <label for="weight" class="form-label">Weight Range</label>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="weight" placeholder="">
+                <span class="input-group-text" id="weight">kg</span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <label for="height" class="form-label">Height Range</label>
+              <div class="input-group mb-3">
+                <input type="text" class="form-control" name="height" placeholder="">
+                <span class="input-group-text" id="height">cm</span>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <label for="gender" class="form-label">Gender</label>
+              <select class="form-select" name="gender" placeholder="">
+                <option value=""></option>
+                <option>Male</option>
+                <option>Female</option>
+                <option>Mixed</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="race" class="form-label">Race</label>
+              <select multiple class="form-select" name="race" placeholder="Choose...">
+                <option value="" selected></option>
+                <option>White</option>
+                <option>African</option>
+                <option>Asian</option>
+                <option>Latino</option>
+                <option>Mixed</option>
+              </select>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">History/Intent</h4>
+          <div class="row gy-3">
+
+            <div class="col-md-3">
+              <label for="treatment_intent" class="form-label">Treatment Intent</label>
+              <select class="form-select" name="treatment_intent" >
+                <option value=""></option>
+                <option>Curative</option>
+                <option>Palliative</option>
+                <option>Salvage</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label for="retreat" class="form-label">Retreat</label>
+              <select class="form-select" name="retreat" >
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unknown</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label for="prior_RT" class="form-label">Prior RT</label>
+              <select class="form-select" name="prior_RT" >
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unknown</option>
+              </select>
+            </div>
+
+            <div class="col-md-3">
+              <label for="surgery" class="form-label">Surgery</label>
+              <select class="form-select" name="surgery" >
+                <option value=""></option>
+                <option>Yes</option>
+                <option>No</option>
+                <option>Unknown</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label for="surgery" class="form-label">Other Therapies</label>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="chemtherapy">Chemtherapy</span>
+                <select class="form-select" name="chemtherapy" >
+                  <option value=""></option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="hormone">Hormone</span>
+                <select class="form-select" name="hormone" >
+                  <option value=""></option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="immunotherapy">Immunotherapy</span>
+                <select class="form-select" name="immunotherapy" >
+                  <option value=""></option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="ADT">Androgen Deprivation (ADT)</span>
+                <select class="form-select" name="ADT" >
+                  <option value=""></option>
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <hr class="my-4">
+          <h4 class="mb-3">Treatment and Outcomes</h4>
+          <h5 class="mb-3">Regimen I +</h5>
+          <div class="row gy-3">
+            <div class="col-12">
+              <input type="text" class="form-control" name="regimen_I" placeholder="">
+            </div>
+
+            <div class="col-md-5">
+              <label for="base_dose_fraction" class="form-label">Base Dose (Gy) / Fractions</label>
+              <input type="text" class="form-control" name="RI_base_dose_fraction" placeholder="xx Gy/xx">
+            </div>
+
+            <div class="col-md-7">
+              <label for="base_dose_modality" class="form-label">Boost Dose (Gy) / Modality</label>
+              <input type="text" class="form-control" name="RI_boost_dose_modality" placeholder="xx Gy/(Photon, Electron, LDR, HDR, Proton)">
+            </div>
+
+            <div class="col-12">
+              <label for="other_therapies" class="form-label">Other Therapies</label>
+              <input type="text" class="form-control" name="RI_other_therapies" placeholder="Chemtherapy/Hormone/Immunotherapy/ADT/…">
+            </div>
+          </div>
+
+          <h6 class="my-4"></h6>
+
+          <h6 class="mb-3">TCP Outcomes</h6>
+          <div class="row gy-3">
+            <div class="col-md-5">
+              <label for="RI_TCP_median_follow_up" class="form-label">Median Follow-up (months)</label>
+              <input type="text" class="form-control" name="RI_TCP_median_follow_up" placeholder="xxx">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_LC" class="form-label">Local Control (LC)</label>
+              <input type="text" class="form-control" name="RI_LC" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-4">
+              <label for="RI_OS" class="form-label">Overall Survival (OS)</label>
+              <input type="text" class="form-control" name="RI_OS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_PFS" class="form-label">PFS</label>
+              <input type="text" class="form-control" name="RI_PFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_bPFS" class="form-label">bPFS</label>
+              <input type="text" class="form-control" name="RI_bPFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_DFS" class="form-label">DFS</label>
+              <input type="text" class="form-control" name="RI_DFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_FFS" class="form-label">FFS</label>
+              <input type="text" class="form-control" name="RI_FFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_MFS" class="form-label">MFS</label>
+              <input type="text" class="form-control" name="RI_MFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_MFS" class="form-label">CSS</label>
+              <input type="text" class="form-control" name="RI_CSS" placeholder="">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_MFS" class="form-label">DMFS</label>
+              <input type="text" class="form-control" name="RI_DMFS" placeholder="">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_MFS" class="form-label">BCR</label>
+              <input type="text" class="form-control" name="RI_BCR" placeholder="">
+            </div>
+          </div>
+
+          <h6 class="my-4"></h6>
+
+          <h6 class="mb-3">NTCP Outcomes</h6>
+          <div class="row gy-3">
+            <div class="col-md-4">
+              <label for="RI_NTCP_median_follow_up" class="form-label">Median Follow-up (months)</label>
+              <input type="text" class="form-control" name="RI_NTCP_median_follow_up" placeholder="xxx">
+            </div>
+
+            <div class="col-md-4">
+              <label for="RI_toxicity_system" class="form-label">Toxicity System</label>
+              <input type="text" class="form-control" name="RI_toxicity_system" placeholder="">
+            </div>
+
+            <div class="col-md-4">
+              <label for="RI_acute" class="form-label">Acute</label>
+              <input type="text" class="form-control" name="RI_acute" placeholder="xx%/Endpoint/mo">
+            </div>
+            <div class="col-12">
+              <label for="RI_G1+" class="form-label">G1+</label>
+              <input type="text" class="form-control" name="RI_G1" placeholder="">
+            </div>
+            <div class="col-12">
+              <label for="RI_G2+" class="form-label">G2+</label>
+              <input type="text" class="form-control" name="RI_G2" placeholder="">
+            </div>
+            <div class="col-12">
+              <label for="RI_G3+" class="form-label">G3+</label>
+              <input type="text" class="form-control" name="RI_G3" placeholder="">
+            </div>
+            <div class="col-12">
+              <label for="RI_G4+" class="form-label">G4+</label>
+              <input type="text" class="form-control" name="RI_G4" placeholder="">
+            </div>
+            <div class="col-12">
+              <label for="RI_G5" class="form-label">G5</label>
+              <input type="text" class="form-control" name="RI_G5" placeholder="">
+            </div>
+          </div>
+
+          <h6 class="my-4"></h6>
+          <h5 class="mb-3">Regimen II +</h5>
+          <div class="row gy-3">
+
+            <div class="col-12">
+              <input type="text" class="form-control" name="regimen_II" placeholder="">
+            </div>
+
+            <div class="col-md-5">
+              <label for="base_dose_fraction" class="form-label">Base Dose (Gy) / Fractions</label>
+              <input type="text" class="form-control" name="RII_base_dose_fraction" placeholder="xx Gy/xx">
+            </div>
+
+            <div class="col-md-7">
+              <label for="base_dose_modality" class="form-label">Boost Dose (Gy) / Modality</label>
+              <input type="text" class="form-control" name="RII_boost_dose_modality" placeholder="xx Gy/(Photon, Electron, LDR, HDR, Proton)">
+            </div>
+
+            <div class="col-12">
+              <label for="other_therapies" class="form-label">Other Therapies</label>
+              <input type="text" class="form-control" name="RII_other_therapies" placeholder="Chemtherapy/Hormone/Immunotherapy/ADT/…">
+            </div>
+          </div>
+
+          <h6 class="my-4"></h6>
+
+          <h6 class="mb-3">TCP Outcomes</h6>
+          <div class="row gy-3">
+            <div class="col-md-5">
+              <label for="RII_TCP_median_follow_up" class="form-label">Median Follow-up (months)</label>
+              <input type="text" class="form-control" name="RII_TCP_median_follow_up" placeholder="xxx">
+            </div>
+            <div class="col-md-3">
+              <label for="RII_LC" class="form-label">Local Control (LC)</label>
+              <input type="text" class="form-control" name="RII_LC" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-4">
+              <label for="RII_OS" class="form-label">Overall Survival (OS)</label>
+              <input type="text" class="form-control" name="RII_OS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RII_PFS" class="form-label">PFS</label>
+              <input type="text" class="form-control" name="RII_PFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RII_bPFS" class="form-label">bPFS</label>
+              <input type="text" class="form-control" name="RII_bPFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RII_DFS" class="form-label">DFS</label>
+              <input type="text" class="form-control" name="RII_DFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RII_FFS" class="form-label">FFS</label>
+              <input type="text" class="form-control" name="RII_FFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RII_MFS" class="form-label">MFS</label>
+              <input type="text" class="form-control" name="RII_MFS" placeholder="xx%/xx mo">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_MFS" class="form-label">CSS</label>
+              <input type="text" class="form-control" name="RII_CSS" placeholder="">
+            </div>
+            <div class="col-md-3">
+              <label for="RI_MFS" class="form-label">DMFS</label>
+              <input type="text" class="form-control" name="RII_DMFS" placeholder="">
+            </div>
+          </div>
+
+          <h6 class="my-4"></h6>
+
+          <h6 class="mb-3">NTCP Outcomes</h6>
+          <div class="row gy-3">
+            <div class="col-md-4">
+              <label for="RII_NTCP_median_follow_up" class="form-label">Median Follow-up (months)</label>
+              <input type="text" class="form-control" name="RII_NTCP_median_follow_up" placeholder="xxx">
+            </div>
+
+            <div class="col-md-4">
+              <label for="RI_toxicity_system" class="form-label">Toxicity System</label>
+              <input type="text" class="form-control" name="RII_toxicity_system" placeholder="">
+            </div>
+
+            <div class="col-md-4">
+              <label for="RII_acute" class="form-label">Acute</label>
+              <input type="text" class="form-control" name="RII_acute" placeholder="xx%/Endpoint/mo">
+            </div>
+            <div class="col-12">
+              <label for="RII_G1+" class="form-label">G1+</label>
+              <input type="text" class="form-control" name="RII_G1" placeholder="">
+            </div>
+            <div class="col-12">
+              <label for="RII_G2+" class="form-label">G2+</label>
+              <input type="text" class="form-control" name="RII_G2" placeholder="">
+            </div>
+            <div class="col-12">
+              <label for="RII_G3+" class="form-label">G3+</label>
+              <input type="text" class="form-control" name="RII_G3" placeholder="">
+            </div>
+            <div class="col-12">
+              <label for="RII_G4+" class="form-label">G4+</label>
+              <input type="text" class="form-control" name="RII_G4" placeholder="">
+            </div>
+            <div class="col-12">
+              <label for="RII_G5" class="form-label">G5</label>
+              <input type="text" class="form-control" name="RII_G5" placeholder="">
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h4 class="mb-3">Treatment Techniques</h4>
+          <div class="row gy-3">
+            <div class="col-12">
+              <label for="modality" class="form-label">Modality</label>
+              <input type="text" class="form-control" name="modality" placeholder="Photon/Proton/Electron/…">
+            </div>
+            <div class="col-12">
+              <label for="planning" class="form-label">Planning</label>
+              <input type="text" class="form-control" name="planning" placeholder="3D/IMRT/VMAT/SRS/SBRT/Adaptive/…">
+            </div>
+            <div class="col-12">
+              <label for="delivery" class="form-label">delivery</label>
+              <input type="text" class="form-control" name="delivery" placeholder="Linac/MR-Linac/CyberKnife/Gamma Knife/Tomo/…">
+            </div>
+            <div class="col-12">
+              <label for="imaging" class="form-label">Imaging</label>
+              <input type="text" class="form-control" name="imaging" placeholder="MV/CBCT/MR/Tracking/…">
+            </div>
+            <div class="col-12">
+              <label for="setup" class="form-label">Setup</label>
+              <input type="text" class="form-control" name="setup" placeholder="Fiducials/Bolus/Spacer/Rectum Balloon/…">
+            </div>
+          </div>
+          <hr class="my-4">
+
+          <h4 class="mb-3">Key Conclusion</h4>
+            <div class="mb-3">
+              <textarea class="form-control" name="key_conclusion" rows="3"></textarea>
+            </div>
+          <hr class="my-4">
+
+          <h4 class="mb-3">Target Dose Constraints</h4>
+            <div class="mb-3">
+              <textarea class="form-control" name="target_dose_constraints" rows="3"></textarea>
+            </div>
+          <hr class="my-4">
+
+          <h4 class="mb-3">OAR Constraints</h4>
+            <div class="mb-3">
+              <textarea class="form-control" name="OAR_constraints" rows="3"></textarea>
+            </div>
+          <hr class="my-4">
+
+          <div class="d-grid gap-2 col-6 mx-auto">
+            <button class="btn btn-dark" type="submit" value="add">Add</button>
+          </div>
+
+          <hr class="my-4">
+
+        </form>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>    
+   </body>
+</html>
