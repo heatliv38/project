@@ -28,7 +28,7 @@ conn = pymysql.connect(host='localhost',
 
 def match(weights):
     all_fields=list(weights.keys()) #get all keys
-    protocol_fields=all_fields[1:]  #get keys protocol related keys
+    protocol_fields=all_fields[1:]  #get protocol related keys
     patient_id=weights['index']  #get patient index
     query1="SELECT * FROM protocols"
     query2="SELECT * FROM patients WHERE patients.index={}".format(patient_id)
@@ -43,9 +43,20 @@ def match(weights):
         score[cur_protocol['name']]=0 #set initial score to 0
         matched_fields[cur_protocol['name']]=[]
         for x in protocol_fields:
-            if patient_data[x]==cur_protocol[x]:
-                score[cur_protocol['name']]+=int(weights[x]) #add score
-                matched_fields[cur_protocol['name']].append(x)  #append matched fields
+            if x=='other_therapies':
+                num_match=0
+                for f in ['chemtherapy','hormone','immunotherapy','surgery']:
+                    if patient_data[f]==cur_protocol[f]:
+                        num_match+=1    
+                if num_match>0: #add score and matched field if there are >=1 matched fields
+                    score[cur_protocol['name']]+=10
+                    matched_fields[cur_protocol['name']].append('other_therapies')
+            
+            else:
+                if patient_data[x]==cur_protocol[x]:
+                    score[cur_protocol['name']]+=int(weights[x]) #add score
+                    matched_fields[cur_protocol['name']].append(x)  #append matched fields
+    
     score={k: v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
 
     return score, matched_fields
@@ -1502,7 +1513,7 @@ if __name__ == "__main__":
     
 
     
-    # w={'index':1, 'treatment_site':10, 'T':10}
+    # w={'index':10, 'treatment_site':10, 'T':10, 'other_therapies':10}
     # s, ml=match(w)
     # print(s)
     # print(ml)
