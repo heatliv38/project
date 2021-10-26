@@ -18,7 +18,7 @@ app.secret_key = '2y14ZhoB0P'
 
 conn = pymysql.connect(host='localhost',
                 user='root',
-                password='Heatliv-38',
+                password='0123',
                 db='capstone',
                 charset='utf8mb4',
                 port = 3306,
@@ -100,34 +100,36 @@ def matching_criteria_get():
 
 @app.route('/matching_criterion', methods=['POST'])
 def matching_criteria_post():
-    p_index = request.form['index']
-    treatment_site=request.form['treatment_site']
-    T=request.form['T']
-    N=request.form['N']
-    M=request.form['M']
-    risk_group=request.form['risk_group']
-    primary_site=request.form['primary_site']
-    metastasis=request.form['metastasis']
-    nodes_num=request.form['node_num']
-    histology=request.form['histology']
-    margin=request.form['margin']
-    PSA=request.form['PSA']
-    gleason=request.form['gleason']
-    recurrence=request.form['recurrence']
-    performance_status=request.form['performance_status']
-    age=request.form['age']
-    treatment_intent=request.form['treatment_intent']
-    retreat=request.form['retreat']
-    prior_RT=request.form['prior_RT']
-    surgery=request.form['surgery']
-    other_therapies=request.form['other_therapies']
-
-    print(request.form)
-    query = "SELECT * from patients where patients.index={}".format(p_index)
+##    p_index = request.form['index']
+##    treatment_site=request.form['treatment_site']
+##    T=request.form['T']
+##    N=request.form['N']
+##    M=request.form['M']
+##    risk_group=request.form['risk_group']
+##    primary_site=request.form['primary_site']
+##    metastasis=request.form['metastasis']
+##    nodes_num=request.form['node_num']
+##    histology=request.form['histology']
+##    margin=request.form['margin']
+##    PSA=request.form['PSA']
+##    gleason=request.form['gleason']
+##    recurrence=request.form['recurrence']
+##    performance_status=request.form['performance_status']
+##    age=request.form['age']
+##    treatment_intent=request.form['treatment_intent']
+##    retreat=request.form['retreat']
+##    prior_RT=request.form['prior_RT']
+##    surgery=request.form['surgery']
+##    other_therapies=request.form['other_therapies']
+    print([request.form.keys()])
+    score, matched_fields=match(request.form)
+    print(score)
+    print(matched_fields)
+    query = "SELECT MRN from patients where patients.index={}".format(p_index)
     print(query)
-    patient_data=query_fetchone(query, conn)
-    print(patient_data)
-    session['index'] = p_index
+    patient_MRN=query_fetchone(query, conn)['MRN']
+    print(patient_MRN)
+    session['MRN'] = patient_MRN
     return redirect('/matching_result')
 
 @app.route('/matching_result', methods=['GET'])
@@ -164,7 +166,7 @@ def patient_input_post():
     risk_group=request.form['risk_group']
     primary_site=request.form['primary_site']
     metastasis=request.form['metastasis']
-    nodes_num=request.form['node_num']
+    nodes_num=request.form['nodes_num']
     staging_system=request.form['staging_system']
     histology=request.form['histology']
     margin=request.form['margin']
@@ -226,7 +228,7 @@ def protocol_input_post():
     risk_group=';'.join(d['risk_group'])
     primary_site=d['primary_site'][0]
     metastasis=d['metastasis'][0]
-    nodes_num=d['node_num'][0]
+    nodes_num=d['nodes_num'][0]
     staging_system=';'.join(d['staging_system'])
     histology=d['histology'][0]
     margin=d['margin'][0]
@@ -307,7 +309,7 @@ def protocol_input_post():
     
     query ="""INSERT INTO protocols(name,description,source,PMID,date,study_size,study_type,analysis_type,country,DOI,treatment_site,
     T,N,M,risk_group,primary_site,metastasis,nodes_num,staging_system,histology,margin,PSA,gleason,recurrence,volume_size,dimension_size,
-    location,clinical_risk,performance_status,age,weight,height,gender_ratio,race,treatment_Intent,retreat,prior_RT,surgery,chemtherapy,
+    location,clinical_risk,performance_status,age,weight,height,gender_ratio,race,treatment_intent,retreat,prior_RT,surgery,chemtherapy,
     hormone,immunotherapy,ADT,Regimen_I,RI_base_dose_fractions,RI_boost_dose_modality,RI_other_therapies,RI_TCP_median_follow_up,
     RI_local_control,RI_overall_survival,RI_PFS,RI_bPFS,RI_DFS,RI_FFS,RI_MFS,RI_CSS,RI_DMFS,RI_BCR,RI_NTCP_median_follow_up,RI_toxicity_system,
     RI_acute,RI_G1,RI_G2,RI_G3,RI_G4,RI_G5,Regimen_II,RII_base_dose_fractions,RII_boost_dose_modality,RII_other_therapies,RII_TCP_median_follow_up,

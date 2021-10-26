@@ -34,7 +34,7 @@ CREATE TABLE `protocols` (
   `height` varchar(30) DEFAULT NULL,
   `gender_ratio` varchar(20) DEFAULT NULL,
   `race` varchar(100) DEFAULT NULL,
-  `treatment_Intent` varchar(50) DEFAULT NULL,
+  `treatment_intent` varchar(50) DEFAULT NULL,
   `retreat` varchar(20) DEFAULT NULL,
   `prior_RT` varchar(30) DEFAULT NULL,
   `surgery` varchar(50) DEFAULT NULL,
