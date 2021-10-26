@@ -9,6 +9,8 @@ import time
 import datetime
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
+import numpy as np
+import pandas as pd
 
 
 
@@ -17,11 +19,37 @@ app.secret_key = '2y14ZhoB0P'
 
 conn = pymysql.connect(host='localhost',
                 user='root',
-                password='0123',
+                password='Heatliv-38',
                 db='capstone',
                 charset='utf8mb4',
                 port = 3306,
                 cursorclass=pymysql.cursors.DictCursor)
+
+
+
+def match(weights):
+    all_fields=list(weights.keys()) #get all keys
+    protocol_fields=all_fields[1:]  #get keys protocol related keys
+    patient_id=all_fields[0]    #get patient index
+    query1="SELECT * FROM protocols"
+    query2=f"SELECT * FROM patients WHERE patients.index= {patient_id}"
+    patient_data=query_fetchall(query2, conn)[0] #dict object
+    protocol_data=query_fetchall(query1, conn)  #list of dicts
+    
+    #matching
+    score={}
+    for i in len(protocol_data):
+        cur_protocol=protocol_data[i]
+        score[cur_protocol['name']]=0 #set initial score to 0
+
+        for x in protocol_fields:
+            if patient_data[x]==cur_protocol[x]:
+                score+=weights[x]
+
+    score={k: v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
+
+    return score
+
 
 @app.route('/', methods=['GET'])
 def home_page_get():
@@ -1471,4 +1499,15 @@ def logout():
 
 if __name__ == "__main__":
     app.run('127.0.0.1', 5000)
+    
 
+    
+    query1="SELECT * FROM protocols"
+    protocol_data=query_fetchall(query1, conn)
+    print(protocol_data)
+    # print(type(protocol_data))
+
+    # query2="SELECT * FROM patients where patients.index=1"
+    # patient_data=query_fetchall(query2, conn)
+    # print(len(patient_data))
+    # print(type(patient_data))
