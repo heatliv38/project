@@ -45,12 +45,13 @@ def match(weights):
         for x in protocol_fields:
             if x=='other_therapies':
                 num_match=0
-                for f in ['chemtherapy','hormone','immunotherapy','surgery']:
+                for f in ['chemtherapy','hormone','immunotherapy','ADT']:
                     if patient_data[f]==cur_protocol[f]:
-                        num_match+=1    
+                        num_match+=1
+                        matched_fields[cur_protocol['name']].append(f)
                 if num_match>0: #add score and matched field if there are >=1 matched fields
                     score[cur_protocol['name']]+=10
-                    matched_fields[cur_protocol['name']].append('other_therapies')
+                   #matched_fields[cur_protocol['name']].append('other_therapies')
             
             else:
                 if patient_data[x]==cur_protocol[x]:
@@ -96,56 +97,51 @@ def patient_data_post():
 
 @app.route('/matching_criterion', methods=['GET'])
 def matching_criteria_get():
-	return render_template('matching_criterion.html')
+    return render_template('matching_criterion.html')
 
 @app.route('/matching_criterion', methods=['POST'])
 def matching_criteria_post():
-##    p_index = request.form['index']
-##    treatment_site=request.form['treatment_site']
-##    T=request.form['T']
-##    N=request.form['N']
-##    M=request.form['M']
-##    risk_group=request.form['risk_group']
-##    primary_site=request.form['primary_site']
-##    metastasis=request.form['metastasis']
-##    nodes_num=request.form['node_num']
-##    histology=request.form['histology']
-##    margin=request.form['margin']
-##    PSA=request.form['PSA']
-##    gleason=request.form['gleason']
-##    recurrence=request.form['recurrence']
-##    performance_status=request.form['performance_status']
-##    age=request.form['age']
-##    treatment_intent=request.form['treatment_intent']
-##    retreat=request.form['retreat']
-##    prior_RT=request.form['prior_RT']
-##    surgery=request.form['surgery']
-##    other_therapies=request.form['other_therapies']
-    print([request.form.keys()])
+    p_index = request.form['index']
     score, matched_fields=match(request.form)
-    print(score)
-    print(matched_fields)
-    query = "SELECT MRN from patients where patients.index={}".format(p_index)
-    print(query)
-    patient_MRN=query_fetchone(query, conn)['MRN']
-    print(patient_MRN)
-    session['MRN'] = patient_MRN
+    session['index'] = p_index
+    session['score']=score
+    session['matched_fields']=matched_fields
     return redirect('/matching_result')
 
 @app.route('/matching_result', methods=['GET'])
 def matching_result_get():
-    return render_template('matching_result.html')
+    p_index = session['index']
+    score = session['score']
+    score={k: v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
+    matched_fields = session['matched_fields']
+    result_data=[]
+    for pro in score.keys():
+        query = "SELECT * from protocols where protocols.name='{}'".format(pro)
+        pro_data=query_fetchone(query, conn)
+        pro_data['score']=score[pro]
+        pro_data['matched_fields']=matched_fields[pro]
+        result_data.append(pro_data)
+    return render_template('matching_result.html',data=result_data,pname=p_index)
 
 @app.route('/matching_result', methods=['POST'])
 def matching_result_post():
-    #query = "SELECT * from patients"
-    #patient_data=query_fetchall(query, conn)
-    return render_template("matching_result.html")
+    p_index = session['index']
+    score = session['score']
+    score={k: v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
+    matched_fields = session['matched_fields']
+    result_data=[]
+    for pro in score.keys():
+        query = "SELECT * from protocols where protocols.name='{}'".format(pro)
+        pro_data=query_fetchone(query, conn)
+        pro_data['score']=score[pro]
+        pro_data['matched_fields']=matched_fields[pro]
+        result_data.append(pro_data)
+    return render_template('matching_result.html',data=result_data,pname=p_index)
 
 
 @app.route('/patient_input', methods=['GET'])
 def patient_input_get():
-	return render_template('patient_input.html')
+    return render_template('patient_input.html')
 
 @app.route('/patient_input', methods=['POST'])
 def patient_input_post():
@@ -202,7 +198,7 @@ def patient_input_post():
     result = query_insert(query, conn)
     if result == 0:
         flash("Request denied, please try one more time!")
-    return redirect('/')
+    return redirect('/patient_data')
 
 @app.route('/protocol_input', methods=['GET'])
 def protocol_input_get():

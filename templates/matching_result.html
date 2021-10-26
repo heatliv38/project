@@ -6,7 +6,7 @@
   <script src="{{ url_for('static', filename='jquery-simple-tree-table.js') }}"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="{{ url_for('static', filename='table.css') }}" rel="stylesheet">
-  <title>Protocols Data</title>
+  <title>Matching Result Patient #{{pname}}</title>
 
 </head>
 <body>
@@ -28,13 +28,13 @@
             <a class="nav-link" href="/protocol_input">Add Protocol</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/matching_criterion">Match</a>
+            <a class="nav-link active" aria-current="page" href="/matching_criterion">Match</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/patient_data">View All Patients</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/protocol_data">View All Protocols</a>
+            <a class="nav-link" href="/protocol_data">View All Protocols</a>
           </li>
         </ul>
       </div>
@@ -47,8 +47,14 @@
   <button class="second-button" type="button" id="collapser">Collapse All</button>
   <div class="tablebody" >
     <table class="mytable" id="basic">
+      <tr class="score" data-node-id="score">
+        <th class="score" >Score</th>
+        {% for d in data %}
+          <td class="score" >{{ d['score'] }}</td>
+        {% endfor %}
+      </tr>
       <tr data-node-id="Index">
-        <th class="myth" class="myth">Index</th>
+        <th class="myth">Index</th>
         {% for d in data %}
           <td>{{ d['index'] }}</td>
         {% endfor %}
@@ -128,49 +134,81 @@
       <tr data-node-id="tsite" data-node-pid="disease">
         <th class="myth">Treatment Site</th>
         {% for d in data %}
-          <td>{{ d['treatment_site'] }}</td>
+          {%if "treatment_site" in d['matched_fields'] %}
+            <td class="matched">{{ d['treatment_site'] }}</td>
+          {% else %}
+            <td>{{ d['treatment_site'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr>
       <tr data-node-id="T" data-node-pid="disease">
         <th class="myth">Staging T</th>
         {% for d in data %}
-          <td>{{ d['T'] }}</td>
+          {%if "T" in d['matched_fields'] %}
+            <td class="matched">{{ d['T'] }}</td>
+          {% else %}
+            <td>{{ d['T'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="N" data-node-pid="disease">
         <th class="myth">Staging N</th>
         {% for d in data %}
-          <td>{{ d['N'] }}</td>
+          {%if "N" in d['matched_fields'] %}
+            <td class="matched">{{ d['N'] }}</td>
+          {% else %}
+            <td>{{ d['N'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="M" data-node-pid="disease">
         <th class="myth">Staging M</th>
         {% for d in data %}
-          <td>{{ d['M'] }}</td>
+          {%if "M" in d['matched_fields'] %}
+            <td class="matched">{{ d['M'] }}</td>
+          {% else %}
+            <td>{{ d['M'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="risk" data-node-pid="disease">
         <th class="myth">Indications/Risk Group NCCN</th>
         {% for d in data %}
-          <td>{{ d['risk_group'] }}</td>
+          {%if "risk_group" in d['matched_fields'] %}
+            <td class="matched">{{ d['risk_group'] }}</td>
+          {% else %}
+            <td>{{ d['risk_group'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="psite" data-node-pid="disease">
         <th class="myth">Primary Site</th>
         {% for d in data %}
-          <td>{{ d['primary_site'] }}</td>
+          {%if "primary_site" in d['matched_fields'] %}
+            <td class="matched">{{ d['primary_site'] }}</td>
+          {% else %}
+            <td>{{ d['primary_site'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="metastasis" data-node-pid="disease">
         <th class="myth">Metastasis</th>
         {% for d in data %}
-          <td>{{ d['metastasis'] }}</td>
+          {%if "metastasis" in d['matched_fields'] %}
+            <td class="matched">{{ d['metastasis'] }}</td>
+          {% else %}
+            <td>{{ d['metastasis'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="nodes_num" data-node-pid="disease">
         <th class="myth">No. of Nodes</th>
         {% for d in data %}
-          <td>{{ d['nodes_num'] }}</td>
+          {%if "nodes_num" in d['matched_fields'] %}
+            <td class="matched">{{ d['nodes_num'] }}</td>
+          {% else %}
+            <td>{{ d['nodes_num'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="stagesys" data-node-pid="disease">
@@ -188,25 +226,41 @@
       <tr data-node-id="histology" data-node-pid="diagnosis">
         <th class="myth">Histology/Pathology</th>
         {% for d in data %}
-          <td>{{ d['histology'] }}</td>
+          {%if "histology" in d['matched_fields'] %}
+            <td class="matched">{{ d['histology'] }}</td>
+          {% else %}
+            <td>{{ d['histology'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="margin" data-node-pid="diagnosis">
         <th class="myth">Margin</th>
         {% for d in data %}
-          <td>{{ d['margin'] }}</td>
+          {%if "margin" in d['matched_fields'] %}
+            <td class="matched">{{ d['margin'] }}</td>
+          {% else %}
+            <td>{{ d['margin'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="psa" data-node-pid="diagnosis">
         <th class="myth">PSA</th>
         {% for d in data %}
-          <td>{{ d['PSA'] }}</td>
+          {%if "PSA" in d['matched_fields'] %}
+            <td class="matched">{{ d['PSA'] }}</td>
+          {% else %}
+            <td>{{ d['PSA'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="gleason" data-node-pid="diagnosis">
         <th class="myth">Gleason</th>
         {% for d in data %}
-          <td>{{ d['gleason'] }}</td>
+          {%if "gleason" in d['matched_fields'] %}
+            <td class="matched">{{ d['gleason'] }}</td>
+          {% else %}
+            <td>{{ d['gleason'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="tumor">
@@ -218,7 +272,11 @@
       <tr data-node-id="recurrence" data-node-pid="tumor">
         <th class="myth">Recurrence</th>
         {% for d in data %}
-          <td>{{ d['recurrence'] }}</td>
+          {%if "recurrence" in d['matched_fields'] %}
+            <td class="matched">{{ d['recurrence'] }}</td>
+          {% else %}
+            <td>{{ d['recurrence'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="volume_size" data-node-pid="tumor">
@@ -254,13 +312,21 @@
       <tr data-node-id="performance_status" data-node-pid="patient">
         <th class="myth">Performance Status</th>
         {% for d in data %}
-          <td>{{ d['performance_status'] }}</td>
+          {%if "performance_status" in d['matched_fields'] %}
+            <td class="matched">{{ d['performance_status'] }}</td>
+          {% else %}
+            <td>{{ d['performance_status'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="age" data-node-pid="patient">
         <th class="myth">Age Range</th>
         {% for d in data %}
-          <td>{{ d['age'] }}</td>
+          {%if "age" in d['matched_fields'] %}
+            <td class="matched">{{ d['age'] }}</td>
+          {% else %}
+            <td>{{ d['age'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="weight" data-node-pid="patient">
@@ -295,49 +361,81 @@
       <tr data-node-id="tintent" data-node-pid="intent">
         <th class="myth">Treatment Intent</th>
         {% for d in data %}
-          <td>{{ d['treatment_Intent'] }}</td>
+          {%if "treatment_intent" in d['matched_fields'] %}
+            <td class="matched">{{ d['treatment_intent'] }}</td>
+          {% else %}
+            <td>{{ d['treatment_intent'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="retreat" data-node-pid="intent">
         <th class="myth">Retreat</th>
         {% for d in data %}
-          <td>{{ d['retreat'] }}</td>
+          {%if "retreat" in d['matched_fields'] %}
+            <td class="matched">{{ d['retreat'] }}</td>
+          {% else %}
+            <td>{{ d['retreat'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="prior_RT" data-node-pid="intent">
         <th class="myth">Prior RT</th>
         {% for d in data %}
-          <td>{{ d['prior_RT'] }}</td>
+          {%if "prior_RT" in d['matched_fields'] %}
+            <td class="matched">{{ d['prior_RT'] }}</td>
+          {% else %}
+            <td>{{ d['prior_RT'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="surgery" data-node-pid="intent">
         <th class="myth">Surgery</th>
         {% for d in data %}
-          <td>{{ d['surgery'] }}</td>
+          {%if "surgery" in d['matched_fields'] %}
+            <td class="matched">{{ d['surgery'] }}</td>
+          {% else %}
+            <td>{{ d['surgery'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="chemtherapy" data-node-pid="intent">
         <th class="myth">Chemtherapy</th>
         {% for d in data %}
-          <td>{{ d['chemtherapy'] }}</td>
+          {%if "chemtherapy" in d['matched_fields'] %}
+            <td class="matched">{{ d['chemtherapy'] }}</td>
+          {% else %}
+            <td>{{ d['chemtherapy'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="hormone" data-node-pid="intent">
         <th class="myth">Hormone</th>
         {% for d in data %}
-          <td>{{ d['hormone'] }}</td>
+          {%if "hormone" in d['matched_fields'] %}
+            <td class="matched">{{ d['hormone'] }}</td>
+          {% else %}
+            <td>{{ d['hormone'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="immunotherapy" data-node-pid="intent">
         <th class="myth">Immunotherapy</th>
         {% for d in data %}
-          <td>{{ d['immunotherapy'] }}</td>
+          {%if "immunotherapy" in d['matched_fields'] %}
+            <td class="matched">{{ d['immunotherapy'] }}</td>
+          {% else %}
+            <td>{{ d['immunotherapy'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="ADT" data-node-pid="intent">
         <th class="myth">Androgen Deprivation (ADT)</th>
         {% for d in data %}
-          <td>{{ d['ADT'] }}</td>
+          {%if "ADT" in d['matched_fields'] %}
+            <td class="matched">{{ d['ADT'] }}</td>
+          {% else %}
+            <td>{{ d['ADT'] }}</td>
+          {% endif %}
         {% endfor %}
       </tr> 
       <tr data-node-id="regimen_I">

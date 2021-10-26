@@ -1,4 +1,13 @@
-
+.score{
+    font-size: 15px;
+    background-color:darkgray;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 55px;
+}
+.matched{
+    background-color: tan;
+}
 table {
     column-rule-style: solid;
     column-rule-width: thin;
@@ -7,7 +16,7 @@ th {
     background-color: darkgray;
     position: -webkit-sticky;
     position: sticky;
-    left: 1px;
+    left: 0px;
     font-weight: bold;
     max-width: 220px;
     min-width: 220px;
