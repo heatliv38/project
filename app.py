@@ -9,8 +9,7 @@ import time
 import datetime
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
-import numpy as np
-import pandas as pd
+
 
 
 
@@ -30,25 +29,26 @@ conn = pymysql.connect(host='localhost',
 def match(weights):
     all_fields=list(weights.keys()) #get all keys
     protocol_fields=all_fields[1:]  #get keys protocol related keys
-    patient_id=all_fields[0]    #get patient index
+    patient_id=weights['index']  #get patient index
     query1="SELECT * FROM protocols"
-    query2=f"SELECT * FROM patients WHERE patients.index= {patient_id}"
+    query2="SELECT * FROM patients WHERE patients.index={}".format(patient_id)
     patient_data=query_fetchall(query2, conn)[0] #dict object
     protocol_data=query_fetchall(query1, conn)  #list of dicts
     
     #matching
     score={}
-    for i in len(protocol_data):
+    matched_fields={}
+    for i in range(len(protocol_data)):
         cur_protocol=protocol_data[i]
         score[cur_protocol['name']]=0 #set initial score to 0
-
+        matched_fields[cur_protocol['name']]=[]
         for x in protocol_fields:
             if patient_data[x]==cur_protocol[x]:
-                score+=weights[x]
-
+                score[cur_protocol['name']]+=int(weights[x]) #add score
+                matched_fields[cur_protocol['name']].append(x)  #append matched fields
     score={k: v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
 
-    return score
+    return score, matched_fields
 
 
 @app.route('/', methods=['GET'])
@@ -1502,12 +1502,7 @@ if __name__ == "__main__":
     
 
     
-    query1="SELECT * FROM protocols"
-    protocol_data=query_fetchall(query1, conn)
-    print(protocol_data)
-    # print(type(protocol_data))
-
-    # query2="SELECT * FROM patients where patients.index=1"
-    # patient_data=query_fetchall(query2, conn)
-    # print(len(patient_data))
-    # print(type(patient_data))
+    # w={'index':1, 'treatment_site':10, 'T':10}
+    # s, ml=match(w)
+    # print(s)
+    # print(ml)
