@@ -1,27 +1,32 @@
-
+.score{
+    font-size: 15px;
+    background-color:white;
+}
+.matched{
+    background-color: rgb(255, 253, 107);
+}
 table {
     column-rule-style: solid;
     column-rule-width: thin;
     }
 th {  
-    background-color: darkgray;
+    background-color:white;
     position: -webkit-sticky;
     position: sticky;
-    left: 1px;
-    font-weight: bold;
-    max-width: 220px;
-    min-width: 220px;
+    left: 0px;
+    font-weight: normal;
+    max-width: 200px;
+    min-width: 200px;
     }
 td {
-    background-color: lightgrey;
-    max-width: 220px;
-    min-width: 220px;
+    max-width: 200px;
+    min-width: 200px;
 }
 td, th { 
     padding-left: 5px; 
     padding-top: 1px; 
     text-align: left; 
     font-size: 10px;
-    max-width: 220px;
-    min-width: 220px;
+    max-width: 200px;
+    min-width: 200px;
     }
