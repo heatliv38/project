@@ -18,7 +18,7 @@ app.secret_key = '2y14ZhoB0P'
 
 conn = pymysql.connect(host='localhost',
                 user='root',
-                password='0123',
+                password='Heatliv-38',
                 db='capstone',
                 charset='utf8mb4',
                 port = 3306,
