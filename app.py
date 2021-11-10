@@ -26,6 +26,46 @@ conn = pymysql.connect(host='localhost',
 
 
 
+def T_range_match(protocol_t, patient_t):
+    '''takes in the protocol T field string and patient T string
+    returns whether they match'''
+    str_split=protocol_t.split('-')
+    # if len(patient_t)==2:       #break patient value into integer and alphabet
+    #     pat_int=int(patient_t[0])
+    #     pat_alph=patient_t[1]
+    # else:
+    #     pat_int=int(patient_t)
+
+    if len(str_split)==1:
+        return str_split[0]==patient_t
+    else:
+        min_val, max_val=str_split
+        if (patient_t>=min_val) & (patient_t<=max_val):
+            return True
+        else: return False
+
+
+
+
+        # if len(min_val)==2:                     #break values into integer and alphabet
+        #     min_int=int(min_val[0])
+        #     min_alph=min_val[1]
+        # else:
+        #     min_int=int(min_val)
+        
+        # if len(max_val)==2:
+        #     max_int=int(max_val[0])
+        #     max_alpl=max_val[1]
+        # else:
+        #     max_int=int(max_val)
+
+        # if 
+        
+
+
+
+
+
 def match(weights):
     all_fields=list(weights.keys()) #get all keys
     protocol_fields=all_fields[1:]  #get protocol related keys
@@ -34,31 +74,42 @@ def match(weights):
     query2="SELECT * FROM patients WHERE patients.index={}".format(patient_id)
     patient_data=query_fetchall(query2, conn)[0] #dict object
     protocol_data=query_fetchall(query1, conn)  #list of dicts
-    
+    # print('patient fields:', patient_data.keys())
+    # print('received weight:', weights)
     #matching
     score={}
     matched_fields={}
     for i in range(len(protocol_data)):
         cur_protocol=protocol_data[i]
-        score[cur_protocol['name']]=0 #set initial score to 0
-        matched_fields[cur_protocol['name']]=[]
+        score[cur_protocol['index']]=0 #set initial score to 0
+        matched_fields[cur_protocol['index']]=[]
+        #print('prot fields:', cur_protocol.keys())
         for x in protocol_fields:
             if x=='other_therapies':
                 num_match=0
                 for f in ['chemtherapy','hormone','immunotherapy','ADT']:
                     if patient_data[f]==cur_protocol[f]:
                         num_match+=1
-                        matched_fields[cur_protocol['name']].append(f)
+                        matched_fields[cur_protocol['index']].append(f)
                 if num_match>0: #add score and matched field if there are >=1 matched fields
-                    score[cur_protocol['name']]+=10
+                    score[cur_protocol['index']]+=10
                    #matched_fields[cur_protocol['name']].append('other_therapies')
             
-            else:
+            elif x=='T': #T range matching
+                if T_range_match(cur_protocol[x], patient_data[x]):
+                    score[cur_protocol['index']]+=int(weights[x])
+                    matched_fields[cur_protocol['index']].append(x)
+                    
+
+            else:               
                 if patient_data[x]==cur_protocol[x]:
-                    score[cur_protocol['name']]+=int(weights[x]) #add score
-                    matched_fields[cur_protocol['name']].append(x)  #append matched fields
-    
+                    score[cur_protocol['index']]+=int(weights[x]) #add score
+                    matched_fields[cur_protocol['index']].append(x)  #append matched fields
+                
+                
     score={k: v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
+
+
 
     return score, matched_fields
 
