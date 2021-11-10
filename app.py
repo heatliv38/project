@@ -97,7 +97,11 @@ def patient_data_post():
 
 @app.route('/matching_criterion', methods=['GET'])
 def matching_criteria_get():
-    return render_template('matching_criterion.html')
+    if request.args:
+        p_id=request.args['id']
+    else:
+        p_id=''
+    return render_template('matching_criterion.html',data=p_id)
 
 @app.route('/matching_criterion', methods=['POST'])
 def matching_criteria_post():
