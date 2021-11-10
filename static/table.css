@@ -5,6 +5,11 @@
 .matched{
     background-color: rgb(255, 253, 107);
 }
+nav {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0px;
+}
 table {
     column-rule-style: solid;
     column-rule-width: thin;
@@ -15,8 +20,8 @@ th {
     position: sticky;
     left: 0px;
     font-weight: normal;
-    max-width: 200px;
-    min-width: 200px;
+    max-width: 250px;
+    min-width: 250px;
     }
 td {
     max-width: 200px;
@@ -26,7 +31,5 @@ td, th {
     padding-left: 5px; 
     padding-top: 1px; 
     text-align: left; 
-    font-size: 10px;
-    max-width: 200px;
-    min-width: 200px;
+    font-size: 13px;
     }

@@ -47,7 +47,7 @@
       <tr data-node-id="Index">
         <th class="myth" class="myth">Index</th>
         {% for d in data %}
-          <td>{{ d['index'] }}</td>
+          <td><a href="/matching_criterion?id={{ d['index'] }}">{{ d['index'] }}</a></td>
         {% endfor %}
       </tr>
       <tr data-node-id="patient">
