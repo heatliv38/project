@@ -18,7 +18,7 @@ app.secret_key = '2y14ZhoB0P'
 
 conn = pymysql.connect(host='localhost',
                 user='root',
-                password='Heatliv-38',
+                password='0123',
                 db='capstone',
                 charset='utf8mb4',
                 port = 3306,
@@ -171,7 +171,7 @@ def matching_result_get():
     matched_fields = session['matched_fields']
     result_data=[]
     for pro in score.keys():
-        query = "SELECT * from protocols where protocols.name='{}'".format(pro)
+        query = "SELECT * from protocols where protocols.index='{}'".format(pro)
         pro_data=query_fetchone(query, conn)
         pro_data['score']=score[pro]
         pro_data['matched_fields']=matched_fields[pro]
@@ -186,7 +186,7 @@ def matching_result_post():
     matched_fields = session['matched_fields']
     result_data=[]
     for pro in score.keys():
-        query = "SELECT * from protocols where protocols.name='{}'".format(pro)
+        query = "SELECT * from protocols where protocols.index='{}'".format(pro)
         pro_data=query_fetchone(query, conn)
         pro_data['score']=score[pro]
         pro_data['matched_fields']=matched_fields[pro]
