@@ -75,109 +75,154 @@
 
     <div class="row g-5">
       <div class="col-md-7 col-lg-8">
-        <h5 class="mb-3">Patient Index</h5>
-        <form action="/matching_criterion" method="POST">
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <input type="text" class="form-control" name="index" placeholder="" value="{{data}}">
+        <h4 class="mb-3">Patient Index</h4>
+       <form action="/matching_criterion" method="POST">
+           <div class="row g-3">
+             <div class="col-sm-6">
+               <input type="text" class="form-control" name="index" placeholder="" value="{{data}}">
+             </div>
+           </div>
+           <hr class="my-4">
+           <h4 class="mb-3">Fields & Weights</h4>
+           <span class="help-block">
+            <small>Enter to change the matching weights (0 means not used for matching).</small>
+           </span>
+            <hr class="my-2">
+            <h5 class="mb-2">Disease</h5>
+            <div class="row mb-2">
+              <label for="treatsite" class="col-sm-3 col-form-label">Treatment Site</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="treatment_site" value="10">
+              </div>
             </div>
-          </div>
-          <hr class="my-4">
-          <h5 class="mb-3">Fields & Weights</h5>
-          <div class="row gy-3">
-            <span class="help-block">
-              <small>Enter to change the matching weights (0 means not used for matching).</small>
-            </span>
-            <div class="col-md-4">
-              <label for="treatsite" class="form-label">Treatment Site</label>
-              <input type="text" class="form-control" name="treatment_site" value="10">
+            <div class="row mb-2">
+              <label for="T" class="col-sm-3 col-form-label">Staging T</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="T" value="10">
+              </div>
             </div>
-            <div class="col-md-4">
-              <label for="T" class="form-label">Staging T</label>
-              <input type="text" class="form-control" name="T" value="10">
+            <div class="row mb-2">
+              <label for="N" class="col-sm-3 col-form-label">Staging N</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="N" value="10">
+              </div>
             </div>
-            <div class="col-md-4">
-              <label for="N" class="form-label">Staging N</label>
-              <input type="text" class="form-control" name="N" value="10">
+            <div class="row mb-2">
+              <label for="M" class="col-sm-3 col-form-label">Staging M</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="M" value="10">
+              </div>
             </div>
-            <div class="col-md-4">
-              <label for="M" class="form-label">Staging M</label>
-              <input type="text" class="form-control" name="M" value="10">
-            </div>
-            <div class="col-md-4">
-              <label for="risk_group" class="form-label">Indication/Risk Group NCCN</label>
-              <input type="text" class="form-control" name="risk_group" value="10">
-            </div>
-
-            <div class="col-md-4">
-              <label for="primary_site" class="form-label">Primary Site</label>
-              <input type="text" class="form-control" name="primary_site" value="10">
-            </div>
-
-            <div class="col-md-4">
-              <label for="metastasis" class="form-label">Metastasis</label>
-              <input type="text" class="form-control" name="metastasis" value="0">
-            </div>
-
-            <div class="col-md-4">
-              <label for="node_num" class="form-label">No. of Nodes</label>
-              <input type="text" class="form-control" name="nodes_num" value="10">
+            <div class="row mb-2">
+              <label for="risk_group" class="col-sm-3 col-form-label">Indication/Risk Group NCCN</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="risk_group" value="10">
+              </div>
             </div>
 
-            <div class="col-md-4">
-              <label for="histology" class="form-label">Histology/Pathology</label>
-              <input type="text" class="form-control" name="histology" value="10">
+            <div class="row mb-2">
+              <label for="primary_site" class="col-sm-3 col-form-label">Primary Site</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="primary_site" value="10">
+              </div>
             </div>
 
-            <div class="col-md-4">
-              <label for="margin" class="form-label">Margin</label>
-              <input type="text" class="form-control" name="margin" value="10">
-            </div>
-            <div class="col-md-4">
-              <label for="PSA" class="form-label">PSA</label>
-              <input type="text" class="form-control" name="PSA" value="10">
-            </div>
-            <div class="col-md-4">
-              <label for="gleason" class="form-label">Gleason Score</label>
-              <input type="text" class="form-control" name="gleason" value="10">
-            </div>
-            <div class="col-md-4">
-              <label for="recurrence" class="form-label">Recurrence</label>
-              <input type="text" class="form-control" name="recurrence" value="10">
-            </div>
-       
-            <div class="col-md-4">
-              <label for="performance_status" class="form-label">Performance Status (WHO)</label>
-              <input type="text" class="form-control" name="performance_status" value="6">
+            <div class="row mb-2">
+              <label for="metastasis" class="col-sm-3 col-form-label">Metastasis</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="metastasis" value="0">
+              </div>
             </div>
 
-            <div class="col-md-4">
-              <label for="age" class="form-label">Age Range</label>
-              <input type="text" class="form-control" name="age" value="3">
+            <div class="row mb-2">
+              <label for="node_num" class="col-sm-3 col-form-label">No. of Nodes</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="nodes_num" value="10">
+              </div>
+            </div>
+            <hr class="my-2">
+            <h5 class="mb-2">Diagnosis</h5>
+            <div class="row mb-2">
+              <label for="histology" class="col-sm-3 col-form-label">Histology/Pathology</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="histology" value="10">
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label for="margin" class="col-sm-3 col-form-label">Margin</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="margin" value="10">
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label for="PSA" class="col-sm-3 col-form-label">PSA</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="PSA" value="10">
+              </div>
+            </div>
+            <div class="row mb-2">
+              <label for="gleason" class="col-sm-3 col-form-label">Gleason Score</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="gleason" value="10">
+              </div>
+            </div>
+            <hr class="my-2">
+            <h5 class="mb-2">Tumor Specifics</h5>
+            <div class="row mb-2">
+              <label for="recurrence" class="col-sm-3 col-form-label">Recurrence</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="recurrence" value="10">
+              </div>
+            </div>
+            <hr class="my-2">
+            <h5 class="mb-2">Patient Characteristics</h5>
+            <div class="row mb-2">
+              <label for="performance_status" class="col-sm-3 col-form-label">Performance Status</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="performance_status" value="6">
+              </div>
             </div>
 
-            <div class="col-md-3">
-              <label for="treatment_intent" class="form-label">Treatment Intent</label>
-              <input type="text" class="form-control" name="treatment_intent" value="10">
+            <div class="row mb-2">
+              <label for="age" class="col-sm-3 col-form-label">Age Range</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="age" value="3">
+              </div>
+            </div>
+            <hr class="my-2">
+            <h5 class="mb-2">History/Intent</h5>
+            <div class="row mb-2">
+              <label for="treatment_intent" class="col-sm-3 col-form-label">Treatment Intent</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="treatment_intent" value="10">
+              </div>
             </div>
 
-            <div class="col-md-3">
-              <label for="retreat" class="form-label">Retreat</label>
-              <input type="text" class="form-control" name="retreat" value="10">
+            <div class="row mb-2">
+              <label for="retreat" class="col-sm-3 col-form-label">Retreat</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="retreat" value="10">
+              </div>
             </div>
 
-            <div class="col-md-3">
-              <label for="prior_RT" class="form-label">Prior RT</label>
-              <input type="text" class="form-control" name="prior_RT" value="10">
+            <div class="row mb-2">
+              <label for="prior_RT" class="col-sm-3 col-form-label">Prior RT</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="prior_RT" value="10">
+              </div>
             </div>
 
-            <div class="col-md-3">
-              <label for="surgery" class="form-label">Surgery</label>
-              <input type="text" class="form-control" name="surgery" value="10">
+            <div class="row mb-2">
+              <label for="surgery" class="col-sm-3 col-form-label">Surgery</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="surgery" value="10">
+              </div>
             </div>
-            <div class="col-12">
-              <label for="chemtherapy" class="form-label">Other Therapies (Any of Chemtherapy, Hormone, Immunotherapy, or ADT)</label>
-              <input type="text" class="form-control" name="other_therapies" value="10">
+            <div class="row mb-2">
+              <label for="chemtherapy" class="col-sm-3 col-form-label">Other Therapies</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" name="other_therapies" value="10">
+              </div>
             </div>
             <div class="col-12">
              <br/>
@@ -188,8 +233,6 @@
             <div class="col-12">
               <br/>
             </div>
-          
-
         </form>
       </div>
     </div>
