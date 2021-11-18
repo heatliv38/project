@@ -54,10 +54,10 @@
               <a class="nav-link" href="/protocol_data">Protocols</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/matching_criterion">Match</a>
+              <a class="nav-link" href="/matching_criterion">Match</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/test_criterion">Test</a>
+              <a class="nav-link active" aria-current="page" href="/test_criterion">Test</a>
             </li>
           </ul>
           <li class="nav-item">
@@ -73,19 +73,12 @@
 <div class="container">
   <main>
     <div class="py-5 text-center">
-      <h3>Matching Criteria</h3>
+      <h3>Test Criteria</h3>
     </div>
 
     <div class="row g-5">
       <div class="col-md-7 col-lg-8">
-        <h4 class="mb-3">Patient Index</h4>
-       <form action="/matching_criterion" method="POST">
-           <div class="row g-3">
-             <div class="col-sm-6">
-               <input type="text" class="form-control" name="index" placeholder="" value="{{data}}">
-             </div>
-           </div>
-           <hr class="my-4">
+       <form action="/test_criterion" method="POST">
            <h4 class="mb-3">Fields & Weights</h4>
            <span class="help-block">
             <small>Enter to change the matching weights (0 means not used for matching).</small>
