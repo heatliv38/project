@@ -1,13 +1,18 @@
 from flask import Flask, render_template, request, session, url_for, redirect
 import pymysql.cursors
 from util import *
+import pandas as pd
+import numpy as np
+from openpyxl import Workbook
+from openpyxl.styles import Alignment, Font,PatternFill
+from openpyxl.utils.dataframe import dataframe_to_rows
+from openpyxl.utils import get_column_letter
+import datetime
+
 from flask import Flask, render_template, flash, request, url_for, redirect, session, g
 from util import *
 from hashlib import md5
 from random import *
-import time
-import datetime
-from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 
 
@@ -24,7 +29,70 @@ conn = pymysql.connect(host='localhost',
                 port = 3306,
                 cursorclass=pymysql.cursors.DictCursor)
 
+@app.route('/test_criterion', methods=['GET'])
+def test_criteria_get():
+    return render_template('test_criterion.html')
 
+@app.route('/test_criterion', methods=['POST'])
+def test_criteria_post():   
+    weights=request.form.to_dict(flat=True)
+    dfs=[]
+    for p_index in range(1,11):
+        weights['index']=str(p_index)
+        score, matched_fields=match(weights)
+        score={k:v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
+        dfs.append(pd.DataFrame(np.array([[int(k) for k in score.keys()],[int(v) for v in score.values()]]).T))
+    df=pd.concat(dfs,axis=1)
+    rele={1:'3,4,6,7,11,12,18',2:'5,9,13,14',3:'1,2,15,16,17',4:'4,6,11,12',5:'1,2,15,16,17',6:'3,5,9,10,13,14,19',7:'5,9,13,14',8:'3,5,9,10,13,14,19',9:'4,6,7,11,12',10:'1,2,15,16,17'}
+    wb=Workbook()
+    ws = wb.active
+    ws.title = "Result"
+    ws.append(['Patient No.',1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10])
+    for x in range(2,21,2):
+        ws.merge_cells(start_row=1,start_column=x, end_row=1, end_column=x+1)
+    ws.append(['Matching results']+['Protocol','Score']*10)
+    for r in dataframe_to_rows(df, index=True, header=False):
+        ws.append(r)
+    ws.append(['Relevant Publications']+list(np.array([[rele[i],''] for i in range(1,11)]).flatten()))
+    ws.delete_rows(3)
+    ws.insert_rows(22)
+    ftb=Font(name='Calibri',bold=True,size=14)
+    ft=Font(name='Calibri',bold=False,size=12)
+    alignment=Alignment(horizontal='center',
+                        vertical='center',
+                         wrap_text=True)
+    for row in ws.iter_rows(min_row=1,min_col=1,max_col=21, max_row=2):
+        for cell in row:
+            cell.font=ftb
+            cell.alignment=alignment
+    for row in ws.iter_rows(min_row=3,min_col=1,max_col=21, max_row=21):
+        for cell in row:
+            cell.font=ft
+            cell.alignment=alignment
+    for cell in ws[23]:
+        cell.font=ftb
+        cell.alignment=alignment
+    ws.row_dimensions[1].height=23
+    ws.row_dimensions[2].height=35
+    for i in range(1, ws.max_column+1):
+        ws.column_dimensions[get_column_letter(i)].width = 13
+    for cell in ws['A3:A21']:
+        cell[0].value=''
+    for col in ws.iter_cols(min_row=2,min_col=2,max_col=21, max_row=21):
+        for cell in col:
+            c=cell.column_letter
+            if ws['{}23'.format(c)].value!='':
+                v=str(cell.value)
+                r=ws['{}23'.format(c)].value.split(',')
+                if v in r:
+                    cell.fill = PatternFill("solid", fgColor="00FFFF00")
+    ws1 = wb.create_sheet("Fields&Weights")
+    dfw=pd.DataFrame({'Field':[k for k in weights.keys()],'Weight':[int(v) for v in weights.values()]})
+    for r in dataframe_to_rows(dfw[:-1], index=False, header=True):
+        ws1.append(r)
+    wb.save('test_result_{}.xlsx'.format(datetime.datetime.now().strftime('%Y-%m-%d %H.%M.%S')))
+        
+    return redirect('/')
 
 def T_range_match(protocol_t, patient_t):
     '''takes in the protocol T field string and patient T string
@@ -60,15 +128,11 @@ def T_range_match(protocol_t, patient_t):
         #     max_int=int(max_val)
 
         # if 
-        
-
-
-
-
 
 def match(weights):
     all_fields=list(weights.keys()) #get all keys
-    protocol_fields=all_fields[1:]  #get protocol related keys
+    all_fields.remove('index')  #get protocol related keys
+    protocol_fields=all_fields  
     patient_id=weights['index']  #get patient index
     query1="SELECT * FROM protocols"
     query2="SELECT * FROM patients WHERE patients.index={}".format(patient_id)
