@@ -108,11 +108,6 @@ def T_range_match(protocol_t, patient_t):
     '''takes in the protocol T field string and patient T string
     returns whether they match'''
     str_split=protocol_t.split('-')
-    # if len(patient_t)==2:       #break patient value into integer and alphabet
-    #     pat_int=int(patient_t[0])
-    #     pat_alph=patient_t[1]
-    # else:
-    #     pat_int=int(patient_t)
 
     if len(str_split)==1:
         return str_split[0]==patient_t
@@ -122,22 +117,23 @@ def T_range_match(protocol_t, patient_t):
             return True
         else: return False
 
+def N_M_range_match(protocol_t, patient_t):
+    '''takes in the protocol T field string and patient T string
+    returns whether they match'''
+    str_split=protocol_t.split('-')
+
+    if len(str_split)==1:
+        return str_split[0]==patient_t
+    else:
+        min_val, max_val=str_split
+        if max_val=='x':
+            return true
+        elif (patient_t>=min_val) & (patient_t<=max_val):
+            return True
+        else: return False
 
 
 
-        # if len(min_val)==2:                     #break values into integer and alphabet
-        #     min_int=int(min_val[0])
-        #     min_alph=min_val[1]
-        # else:
-        #     min_int=int(min_val)
-        
-        # if len(max_val)==2:
-        #     max_int=int(max_val[0])
-        #     max_alpl=max_val[1]
-        # else:
-        #     max_int=int(max_val)
-
-        # if 
 
 def match(weights):
     all_fields=list(weights.keys()) #get all keys
@@ -149,7 +145,7 @@ def match(weights):
     patient_data=query_fetchall(query2, conn)[0] #dict object
     protocol_data=query_fetchall(query1, conn)  #list of dicts
     # print('patient fields:', patient_data.keys())
-    # print('received weight:', weights)
+    print('received weight:', weights)
     #matching
     score={}
     matched_fields={}
@@ -172,6 +168,28 @@ def match(weights):
             elif x=='T': #T range matching
                 if T_range_match(cur_protocol[x], patient_data[x]):
                     score[cur_protocol['index']]+=int(weights[x])
+                    matched_fields[cur_protocol['index']].append(x)
+
+            elif x=='N': #N range matching
+                if N_M_range_match(cur_protocol[x], patient_data[x]):
+                    score[cur_protocol['index']]+=int(weights[x])
+                    matched_fields[cur_protocol['index']].append(x)
+
+            elif x=='M': #M range matching
+                if N_M_range_match(cur_protocol[x], patient_data[x]):
+                    score[cur_protocol['index']]+=int(weights[x])
+                    matched_fields[cur_protocol['index']].append(x)
+
+            elif x=='treatment_site': #treatment site matching
+                val_lst=cur_protocol[x].split('/')
+                if patient_data[x] in val_lst:
+                    score[cur_protocol['index']]+=int(weights[x]) 
+                    matched_fields[cur_protocol['index']].append(x)
+
+            elif x=='risk_group': #risk group matching
+                val_lst=cur_protocol[x].split('/')
+                if patient_data[x] in val_lst:
+                    score[cur_protocol['index']]+=int(weights[x]) 
                     matched_fields[cur_protocol['index']].append(x)
                     
 
