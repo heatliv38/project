@@ -118,7 +118,7 @@ def T_range_match(protocol_t, patient_t):
         else: return False
 
 def N_M_range_match(protocol_t, patient_t):
-    '''takes in the protocol T field string and patient T string
+    '''takes in the protocol N or M field string and patient N or M string
     returns whether they match'''
     str_split=protocol_t.split('-')
 
@@ -127,10 +127,35 @@ def N_M_range_match(protocol_t, patient_t):
     else:
         min_val, max_val=str_split
         if max_val=='x':
-            return true
+            return True
         elif (patient_t>=min_val) & (patient_t<=max_val):
             return True
         else: return False
+
+def Risk_match(protocol_t, patient_t):
+    '''takes in the protocol risk_group field string and patient risk_group string
+    returns whether they match'''
+    pat_split=patient_t.split('/')
+    prot_split=protocol_t.split('/')
+
+    for x in pat_split:
+        if x in prot_split:
+            return True
+    
+    return False
+
+
+def Treatment_site_match(protocol_t, patient_t):
+    '''takes in the protocol treatment_site field string and patient treatment_site string
+    returns whether they match'''
+    pat_split=patient_t.split('/')
+    prot_split=protocol_t.split('/')
+
+    for x in pat_split:
+        if x in prot_split:
+            return True
+    
+    return False
 
 
 
@@ -181,15 +206,13 @@ def match(weights):
                     matched_fields[cur_protocol['index']].append(x)
 
             elif x=='treatment_site': #treatment site matching
-                val_lst=cur_protocol[x].split('/')
-                if patient_data[x] in val_lst:
-                    score[cur_protocol['index']]+=int(weights[x]) 
+                if Treatment_site_match(cur_protocol[x], patient_data[x]):
+                    score[cur_protocol['index']]+=int(weights[x])
                     matched_fields[cur_protocol['index']].append(x)
 
             elif x=='risk_group': #risk group matching
-                val_lst=cur_protocol[x].split('/')
-                if patient_data[x] in val_lst:
-                    score[cur_protocol['index']]+=int(weights[x]) 
+                if Risk_match(cur_protocol[x], patient_data[x]):
+                    score[cur_protocol['index']]+=int(weights[x])
                     matched_fields[cur_protocol['index']].append(x)
                     
 
