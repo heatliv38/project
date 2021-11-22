@@ -302,7 +302,7 @@ def patient_input_post():
     race=request.form['race']
     performance_status=request.form['performance_status']
     #join values for multiple selection for treatment site
-    treatment_site=";".join(request.form.to_dict(flat=False)['treatment_site'])
+    treatment_site="/".join(request.form.to_dict(flat=False)['treatment_site'])
     T=request.form['T']
     N=request.form['N']
     M=request.form['M']
@@ -361,18 +361,18 @@ def protocol_input_post():
     publish_date=d['publish_date'][0]
     size=d['size'][0]
     study_type=d['study_type'][0]
-    analysis_type=';'.join(d['analysis_type'])
-    country=';'.join(d['country'])
+    analysis_type='/'.join(d['analysis_type'])
+    country='/'.join(d['country'])
     DOI=d['DOI'][0]
-    treatment_site=';'.join(d['treatment_site'])
-    T=';'.join(d['T'])
-    N=';'.join(d['N'])
-    M=';'.join(d['M'])
-    risk_group=';'.join(d['risk_group'])
+    treatment_site='/'.join(d['treatment_site'])
+    T=d['T'][0] if len(d['T'])==1 else d['T'][0]+'-'+d['T'][1]
+    M=d['M'][0] if len(d['M'])==1 else d['M'][0]+'-'+d['M'][1]
+    N=d['N'][0] if len(d['N'])==1 else d['N'][0]+'-'+d['N'][1]
+    risk_group='/'.join(d['risk_group'])
     primary_site=d['primary_site'][0]
     metastasis=d['metastasis'][0]
     nodes_num=d['nodes_num'][0]
-    staging_system=';'.join(d['staging_system'])
+    staging_system='/'.join(d['staging_system'])
     histology=d['histology'][0]
     margin=d['margin'][0]
     PSA=d['PSA'][0]
@@ -382,12 +382,12 @@ def protocol_input_post():
     dimension_size=d['dimension_size'][0]
     location=d['location'][0]
     clinical_risk=d['clinical_risk_factors'][0]
-    performance_status=';'.join(d['performance_status'])
+    performance_status='/'.join(d['performance_status'])
     age=d['age'][0]
     weight=d['weight'][0]
     height=d['height'][0]
     gender=d['gender'][0]
-    race=';'.join(d['race'])
+    race='/'.join(d['race'])
     treatment_intent=d['treatment_intent'][0]
     retreat=d['retreat'][0]
     prior_RT=d['prior_RT'][0]
