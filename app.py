@@ -23,7 +23,7 @@ app.secret_key = '2y14ZhoB0P'
 
 conn = pymysql.connect(host='localhost',
                 user='root',
-                password='0123',
+                password='Heatliv-38',
                 db='capstone',
                 charset='utf8mb4',
                 port = 3306,
@@ -97,6 +97,10 @@ def test_criteria_post():
                 r=ws['{}23'.format(c)].value.split(',')
                 if v in r:
                     cell.fill = PatternFill("solid", fgColor="00FFFF00")
+    #ws1 = wb.create_sheet("Fields&Weights")
+    #dfw=pd.DataFrame({'Field':[k for k in weights.keys()],'Weight':[int(v) for v in weights.values()]})
+    #for r in dataframe_to_rows(dfw[:-1], index=False, header=True):
+    #    ws1.append(r)
     wb.save('test_result_{}.xlsx'.format(datetime.datetime.now().strftime('%Y-%m-%d %H.%M.%S')))       
     return redirect('/')
 
@@ -166,7 +170,7 @@ def match(weights):
     patient_data=query_fetchall(query2, conn)[0] #dict object
     protocol_data=query_fetchall(query1, conn)  #list of dicts
     # print('patient fields:', patient_data.keys())
-    print('received weight:', weights)
+    # print('received weight:', weights)
     #matching
     score={}
     matched_fields={}
