@@ -3,7 +3,7 @@ Index,Name,MRN,DOB,Age,Weight,Height,Gender,Race,Performance Status,Treatment Si
 2,,14622383,3/31/61,60,75,177cm,M,,1,Prostate,3b,0,0,Very High,Prostate,0,0,Clinical,Carcinoma,,62.9,4+4,No,31,3.8 x 3.6 x 4.3,,,Curative,None,None,None,,,,Lupron 18 mo
 3,,20210910,,55,70,190,,,0,Prostate Bed,3a,0,0,,Prostate,,,Pathological,Carcinoma,,0.23,4+4,Yes,,,,,Salvage,None,None,Yes,,,,Lupron 6 months
 4,,20210911,,67,85,170,,,1,Prostate,1c,0,0,Intermediate,Prostate,0,0,Clinical,Carcinoma,,9.9,3+4=7,No,55,4.9 x 4.4 x 4.6,,,Curative,None,None,None,,,,None
-5,,20210913,,81,65,164,,,0,Prostate,2,0,0,Very High,Prostate,,,Pathological,Carcinoma,,0.4,5+4=9,Yes,,,,,,,,,,,,
+5,,20210913,,81,65,164,,,0,Prostate Bed,2,0,0,Very High,Prostate,,,Pathological,Carcinoma,,0.4,5+4=9,Yes,,,,,,,,,,,,
 6,,20210914,,50,90,182,,,1,Prostate,1c,0,0,Very High,Prostate,,,Clinical,Carcinoma,,1.5,5+5=10,No,40,4.0 x 3.8 x 3.9,,,,,,,,,,
 7,,11379642,17063,75,121kg,175cm,M,,0,Prostate/Pelvis,4,0,0,Very High,Prostate,0,0,Clinical,Carcinoma,,20,4+4,No,32,4.5 x 3.3 x 4.2,,,Curative ,None,None,None,,,,"Relugolix, Abiraterone 24 mo"
 8,,10508813,20536,65,80kg,170cm,M,,0,Prostate/Pelvis,2,0,0,High,Prostate,0,0,Clinical,Carcinoma,,18,4+3,No,40,4.3 x 3.8 x 4.0,,,Curative,None,None,None,,,,Lupron 24 months
