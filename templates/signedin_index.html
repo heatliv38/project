@@ -61,6 +61,15 @@
               <a class="nav-link" href="/test_criterion">Analytics</a>
             </li>
           </ul>
+          {%if data[1]%}
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Log Out </a>
+          </li>
+          {%else%}
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Log In </a>
+          </li>
+          {%endif%}
           <li class="nav-item">
             <a class="nav-link" href="/patient_input">Add Patient</a>
           </li>
@@ -76,12 +85,6 @@
     <div class="py-5 text-center">
       <h2>{{data[0]}}</h2>
     </div>
-    {%if data[1]%}
-    <center>
-      <div><a href="../logout">Log Out </a></div>
-      <br>
-   </center>
-   {%endif%}
   </main>
 
 </div>

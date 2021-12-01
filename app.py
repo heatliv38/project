@@ -88,11 +88,12 @@ def login_post():
 def logout():
     session.clear()
     session['loggedin']=False
-    return redirect("/")
+    return redirect("/signedin_index")
 
 @app.route('/test_criterion', methods=['GET'])
 def test_criteria_get():
-    return render_template('test_criterion.html')
+    status=session['loggedin']
+    return render_template('test_criterion.html',s=status)
 
 @app.route('/test_criterion', methods=['POST'])
 def test_criteria_post():   
@@ -329,25 +330,29 @@ def signedin_home_page_post():
 def protocol_data_get():
     query = "SELECT * from protocols"
     protocol_data=query_fetchall(query, conn)
-    return render_template("protocol_data.html", data=protocol_data)
+    status=session['loggedin']
+    return render_template("protocol_data.html", data=protocol_data,s=status)
 
 @app.route('/protocol_data', methods=['POST'])
 def protocol_data_post():
     query = "SELECT * from protocols"
     protocol_data=query_fetchall(query, conn)
-    return render_template("protocol_data.html", data=protocol_data)
+    status=session['loggedin']
+    return render_template("protocol_data.html", data=protocol_data,s=status)
 
 @app.route('/patient_data', methods=['GET'])
 def patient_data_get():
     query = "SELECT * from patients"
     patient_data=query_fetchall(query, conn)
-    return render_template("patient_data.html", data=patient_data)
+    status=session['loggedin']
+    return render_template("patient_data.html", data=patient_data,s=status)
 
 @app.route('/patient_data', methods=['POST'])
 def patient_data_post():
     query = "SELECT * from patients"
     patient_data=query_fetchall(query, conn)
-    return render_template("patient_data.html", data=patient_data)
+    status=session['loggedin']
+    return render_template("patient_data.html", data=patient_data,s=status)
 
 @app.route('/matching_criterion', methods=['GET'])
 def matching_criteria_get():
@@ -355,7 +360,8 @@ def matching_criteria_get():
         p_id=request.args['id']
     else:
         p_id=''
-    return render_template('matching_criterion.html',data=p_id)
+    status=session['loggedin']
+    return render_template('matching_criterion.html',data=p_id,s=status)
 
 @app.route('/matching_criterion', methods=['POST'])
 def matching_criteria_post():
@@ -364,6 +370,7 @@ def matching_criteria_post():
     session['index'] = p_index
     session['score']=score
     session['matched_fields']=matched_fields
+    status=session['loggedin']
     return redirect('/matching_result')
 
 @app.route('/matching_result', methods=['GET'])
@@ -373,16 +380,18 @@ def matching_result_get():
     score={k: v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
     matched_fields = session['matched_fields']
     result_data=[]
+    status=session['loggedin']
     for pro in score.keys():
         query = "SELECT * from protocols where protocols.index='{}'".format(pro)
         pro_data=query_fetchone(query, conn)
         pro_data['score']=score[pro]
         pro_data['matched_fields']=matched_fields[pro]
         result_data.append(pro_data)
-    return render_template('matching_result.html',data=result_data,pname=p_index)
+    return render_template('matching_result.html',data=result_data,pname=p_index,s=status)
 
 @app.route('/matching_result', methods=['POST'])
 def matching_result_post():
+    status=session['loggedin']
     p_index = session['index']
     score = session['score']
     score={k: v for k, v in sorted(score.items(), key=lambda item: item[1], reverse=True)}
@@ -394,7 +403,7 @@ def matching_result_post():
         pro_data['score']=score[pro]
         pro_data['matched_fields']=matched_fields[pro]
         result_data.append(pro_data)
-    return render_template('matching_result.html',data=result_data,pname=p_index)
+    return render_template('matching_result.html',data=result_data,pname=p_index,s=status)
 
 
 @app.route('/patient_input', methods=['GET'])

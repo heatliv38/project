@@ -34,6 +34,15 @@
             <a class="nav-link" href="/test_criterion">Analytics</a>
           </li>
         </ul>
+        {%if s%}
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Log Out </a>
+          </li>
+        {%else%}
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Log In </a>
+          </li>
+        {%endif%}
         <li class="nav-item">
           <a class="nav-link" href="/patient_input">Add Patient</a>
         </li>
