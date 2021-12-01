@@ -19,15 +19,76 @@ from dateutil.relativedelta import relativedelta
 
 
 app = Flask(__name__)
+
 app.secret_key = '2y14ZhoB0P'
 
 conn = pymysql.connect(host='localhost',
                 user='root',
-                password='Heatliv-38',
+                password='0123',
                 db='capstone',
                 charset='utf8mb4',
                 port = 3306,
                 cursorclass=pymysql.cursors.DictCursor)
+
+@app.route('/register', methods=['GET'])
+def register_get():
+    return render_template('register.html')
+
+@app.route('/register', methods=['POST'])
+def register_post():
+    email = request.form['email']
+    # Password encoded with utf-8 first then encoded with md5
+    password = md5(request.form['password'].encode('utf-8')).hexdigest()
+    confirm_password = md5(request.form['confirm_password'].encode('utf-8')).hexdigest()
+    if password != confirm_password:
+        err = "The confirmed password should match the password you input before!"
+        flash(err)
+        return render_template("register.html")
+
+    query = 'SELECT * FROM user WHERE email="%s"' % (email)
+    print(query)
+    data = query_fetchone(query, conn)
+
+    if data is not None:
+        err = "User already exists!"
+        flash(err)
+        return redirect('/register')
+    else:
+        query = 'INSERT INTO user VALUES("{}", "{}")'.format(email, password)
+        result = query_insert(query, conn)
+        if result == 0:
+            flash("Request denied, please try one more time!")
+        #session['email'] = email
+        notification = "Successfully signed up! Please sign in again!"
+        return redirect('/login')
+
+@app.route('/login', methods=['GET'])
+def login_get():
+	return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login_post():
+    email = request.form['email']
+    password = md5(request.form['password'].encode('utf-8')).hexdigest()
+    # password = request.form['password']
+    query = 'SELECT * FROM user WHERE email="%s" and password="%s"' % (email, password)
+    print(query)
+    data = query_fetchone(query, conn)
+
+    if (data):
+        session['email'] = email
+        session['loggedin']=True
+        return redirect('/signedin_index')
+    else:
+        err = "Email or password error!"
+        flash(err)
+        return redirect('/login')
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    session['loggedin']=False
+    return redirect("/")
 
 @app.route('/test_criterion', methods=['GET'])
 def test_criteria_get():
@@ -231,11 +292,38 @@ def match(weights):
 
 @app.route('/', methods=['GET'])
 def home_page_get():
-    return render_template("index.html")
+    session.clear()
+    session['loggedin']=False
+    msg='Welcome! Please use the Navigation Bar Above'
+    print(session)
+    return render_template("index.html",data=msg)
 
 @app.route('/', methods=['POST'])
 def home_page_post():
-    return render_template("index.html")
+    msg='Welcome! Please use the Navigation Bar Above'
+    return render_template("index.html",data=msg)
+
+@app.route('/signedin_index', methods=['GET'])
+def signedin_home_page_get():
+    if session['loggedin']:
+        email=session['email']
+        status=session['loggedin']
+        msg='Welcome {}!'.format(email)
+    else:
+        msg='Welcome! Please use the Navigation Bar Above'
+        status=session['loggedin']
+    return render_template("signedin_index.html",data=[msg,status])
+
+@app.route('/signedin_index', methods=['POST'])
+def signedin_home_page_post():
+    if session['loggedin']:
+        email=session['email']
+        status=session['loggedin']
+        msg='Welcome {}!'.format(email)
+    else:
+        msg='Welcome! Please use the Navigation Bar Above'
+        status=session['loggedin']
+    return render_template("signedin_index.html",data=[msg,status])
 
 @app.route('/protocol_data', methods=['GET'])
 def protocol_data_get():
@@ -311,7 +399,10 @@ def matching_result_post():
 
 @app.route('/patient_input', methods=['GET'])
 def patient_input_get():
-    return render_template('patient_input.html')
+    if 'email' in session:
+        return render_template('patient_input.html')
+    else:
+        return render_template('login.html')
 
 @app.route('/patient_input', methods=['POST'])
 def patient_input_post():
@@ -372,7 +463,10 @@ def patient_input_post():
 
 @app.route('/protocol_input', methods=['GET'])
 def protocol_input_get():
-	return render_template('protocol_input.html')
+    if 'email' in session:
+        return render_template('protocol_input.html')
+    else:
+        return render_template('login.html')
 
 @app.route('/protocol_input', methods=['POST'])
 def protocol_input_post():
@@ -585,9 +679,6 @@ def register_staff():
         session['role'] = "staff"
         return redirect('/login_staff')
 
-@app.route('/login', methods = ['GET', 'POST'])
-def login():
-    return render_template('login.html')
 
 @app.route('/login_customer', methods=['GET'])
 def login_customer_get():
@@ -1668,12 +1759,6 @@ def staff_frequent_customer_get():
 @app.route('/staff_frequent_customer', methods=['POST'])
 def staff_frequent_customer_post():
     return render_template('/staff_frequent_customer.html', username = session['email'])
-
-@app.route('/logout', methods=['GET'])
-def logout():
-    session.pop('email', None)
-    session.pop('role', None)
-    return redirect("/login")
 
 
 if __name__ == "__main__":
